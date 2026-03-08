@@ -1,0 +1,62 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Straight Right Path"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Far Auto Shoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "go forward"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "eat ball"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Auto Intake"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "back and shoot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Far Auto Shoot"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}
