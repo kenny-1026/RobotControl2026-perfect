@@ -282,7 +282,10 @@ public class RobotContainer {
 
         // // 按下 B 鍵，Intake 自動收回到 0 圈 (原點)
         driverController.b().whileTrue(
+            Commands.parallel(
+            intakeRoller.sys_outtake(),
             transport.sys_reverseTransport()
+            )
         );
 
         // ==========================================

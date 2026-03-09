@@ -128,9 +128,9 @@ public final class Constants {
     //   3.0m→55, 3.5m→60, 4.0m→65, 5.0m→70
     //
     // ⚠️ 如果更換射手機構或重新測量，請用 fit_rps.py 重新擬合係數！
-    public static final double kRpsA = -2.00; // d² 係數
-    public static final double kRpsB = 16.20; // d  係數
-    public static final double kRpsC = 30.90; // 常數項
+    public static final double kRpsA = 4.0; // d² 係數
+    public static final double kRpsB = -3.6; // d  係數
+    public static final double kRpsC = 45.6; // 常數項
 
     // 安全限制：超出測量範圍時 clamp 到邊界值
     public static final double kRpsMinDistance = 1.0;  // 最近測量距離 (m)
@@ -160,7 +160,7 @@ public final class Constants {
     // 如果射手出口在機器人正後方（-X 方向），設為 Math.PI
     // 如果射手出口在其他角度，填入相應弧度值
     // ⚠️ 請根據實際機器人射手安裝方向設定！
-    public static final double kShooterAngleOffsetRad = 0.3; // TODO: 確認射手方向（假設射手在背面）
+    public static final double kShooterAngleOffsetRad = 0.2; // TODO: 確認射手方向（假設射手在背面）
   }
 
   public static class OperatorConstants {
@@ -214,7 +214,7 @@ public final class Constants {
     public static final int kFollowerMotorID = 35;
 
     // ── 速度目標 (RPS) ──
-    public static final double kIntakeTargetRps = 40.0;
+    public static final double kIntakeTargetRps = 60.0;
     public static final double kOuttakeTargetRps = -30.0;
 
     // ── PID 初始值 (Slot 0, VelocityVoltage) ──
