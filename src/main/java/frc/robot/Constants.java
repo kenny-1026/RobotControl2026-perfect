@@ -136,7 +136,7 @@ public final class Constants {
     public static final double kRpsMinDistance = 1.0;  // 最近測量距離 (m)
     public static final double kRpsMaxDistance = 5.0;  // 最遠測量距離 (m)
     public static final double kRpsMin = 35.0;         // 最低 RPS（對應最近距離）
-    public static final double kRpsMax = 70.0;         // 最高 RPS（對應最遠距離）
+    public static final double kRpsMax = 75.0;         // 最高 RPS（對應最遠距離）
 
     // 射手速度容許誤差 (RPS)
     public static final double kShooterToleranceRps = 10.0;
