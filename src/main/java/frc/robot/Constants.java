@@ -76,7 +76,7 @@ public final class Constants {
     // ── 中立區回傳角度（藍方基準） ──
     // 藍方聯盟區在場地左邊(-X) → 朝 180° 射
     // 紅方由 flipAngle() 自動計算（π → 0）
-    public static final double kReturnAngleRad = Math.PI; // 藍方基準：朝場地正左 (180°)
+    public static final double kReturnAngleRad =180; // 藍方基準：朝場地正左 (180°)
 
     /**
      * 取得己方 Hub 的場地座標（自動處理紅藍鏡像）
@@ -113,7 +113,7 @@ public final class Constants {
     }
 
     // 旋轉 PID（控制底盤面向目標）
-    public static final double kRotation_kP = 5.5;
+    public static final double kRotation_kP = 4.0;
     public static final double kRotation_kI = 0.0;
     public static final double kRotation_kD = 0.1;
     public static final double kRotationToleranceDeg = 2.0; // 角度容許誤差 (度)
@@ -128,9 +128,9 @@ public final class Constants {
     //   3.0m→55, 3.5m→60, 4.0m→65, 5.0m→70
     //
     // ⚠️ 如果更換射手機構或重新測量，請用 fit_rps.py 重新擬合係數！
-    public static final double kRpsA = -0.686275; // d² 係數
-    public static final double kRpsB =  13.186275; // d  係數
-    public static final double kRpsC = 21.911765; // 常數項
+    public static final double kRpsA = -2.00; // d² 係數
+    public static final double kRpsB = 16.20; // d  係數
+    public static final double kRpsC = 30.90; // 常數項
 
     // 安全限制：超出測量範圍時 clamp 到邊界值
     public static final double kRpsMinDistance = 1.0;  // 最近測量距離 (m)
@@ -160,7 +160,7 @@ public final class Constants {
     // 如果射手出口在機器人正後方（-X 方向），設為 Math.PI
     // 如果射手出口在其他角度，填入相應弧度值
     // ⚠️ 請根據實際機器人射手安裝方向設定！
-    public static final double kShooterAngleOffsetRad = 0; // TODO: 確認射手方向（假設射手在背面）
+    public static final double kShooterAngleOffsetRad = 0.3; // TODO: 確認射手方向（假設射手在背面）
   }
 
   public static class OperatorConstants {
