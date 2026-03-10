@@ -239,6 +239,8 @@ public class RobotContainer {
         //   - AutoAimAndShoot 不佔 swerve（透過 setAimSpeed 疊加）
         //   - 若同時按 A + LB，兩者會同時控制底盤打架
         //   → 解法：Drive2Tag 綁定時額外 require shooter+transport，讓 scheduler 自動互斥
+        
+        // 手動射擊：按住左緩衝鍵 (Left Bumper) 時直接設定射手速度為 45 RPS，達速後啟動 Transport 送球；放開時強制停止射手
         driverController.leftBumper().whileTrue(
             Commands.parallel(
                 // 1. 讓 Shooter 馬達直接設定為 45 RPS (使用你寫好的 setTargetVelocity 方法)
@@ -252,7 +254,7 @@ public class RobotContainer {
                     transport.sys_runTransport()
                 )
             ).finallyDo(() -> {
-                // 3. 安全防呆：只要放開右板機，強制停止射手
+                // 3. 安全防呆：只要放開左緩衝鍵，強制停止射手
                 shooterSubsystem.stopShooter();
                 // (註：transport.sys_runTransport() 放開時會自己停，所以這裡不用多寫)
             })
@@ -270,8 +272,7 @@ public class RobotContainer {
                 )
         );
 
-        // 手動射擊：按住左緩衝鍵 → 自動瞄準 + 依距離調整 RPS + 達速對準後自動送球
-        // 與 leftBumper 的 AutoAimAndShoot 功能相同
+       // AutoAimAndShoot：按住右板機自動瞄準 + 依距離調整射手速度 + 達速對準後自動發射 
        driverController.rightTrigger(0.1).whileTrue(
            new AutoAimAndShoot(swerve, shooterSubsystem, transport, manualDriveCommand, shuffleboardManager.getAutoAimTab()
             ) 
