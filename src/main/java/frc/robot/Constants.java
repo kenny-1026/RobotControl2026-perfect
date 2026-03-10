@@ -54,7 +54,7 @@ public final class Constants {
   // Dashboard 更新頻率 = 50Hz / kTelemetryDivider
   // 5 → 每 5 個週期更新一次 = 10Hz (100ms)，人眼足夠
   // 比賽時可改更大值（如 10 → 5Hz）進一步減輕網路負擔
-  public static final int kTelemetryDivider = 5;
+  public static final int kTelemetryDivider = 10;
 
   // ===== 自動瞄準射擊相關常數 =====
   // 2026 REBUILT: 射入 Hub 得分（Fuel 遊戲物件）
@@ -160,7 +160,7 @@ public final class Constants {
     // 如果射手出口在機器人正後方（-X 方向），設為 Math.PI
     // 如果射手出口在其他角度，填入相應弧度值
     // ⚠️ 請根據實際機器人射手安裝方向設定！
-    public static final double kShooterAngleOffsetRad = 0.4; // TODO: 確認射手方向（假設射手在背面）
+    public static final double kShooterAngleOffsetRad = 0.2; // TODO: 確認射手方向（假設射手在背面）
   }
 
   public static class OperatorConstants {
@@ -215,7 +215,7 @@ public final class Constants {
 
     // ── 速度目標 (RPS) ──
     public static final double kIntakeTargetRps = 60.0;
-    public static final double kOuttakeTargetRps = -30.0;
+    public static final double kOuttakeTargetRps = -70.0;
 
     // ── PID 初始值 (Slot 0, VelocityVoltage) ──
     public static final double kDefaultKV = 0.12;

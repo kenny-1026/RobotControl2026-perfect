@@ -260,12 +260,12 @@ public class RobotContainer {
        driverController.rightTrigger(0.1).whileTrue(
             Commands.parallel(
                 // 1. 讓 Shooter 馬達直接設定為 70 RPS (使用你寫好的 setTargetVelocity 方法)
-                Commands.run(() -> shooterSubsystem.setTargetVelocity(70.0), shooterSubsystem),
+                Commands.run(() -> shooterSubsystem.setTargetVelocity(43.0), shooterSubsystem),
                 
                 // 2. 監控轉速，達速後啟動 Transport 馬達送球
                 Commands.sequence(
                     // 優雅地使用你的 isAtSpeed 方法：等待轉速達到 70 (容許誤差 2.0 RPS)
-                    Commands.waitUntil(() -> shooterSubsystem.isAtSpeed(70.0, 2.0)),
+                    Commands.waitUntil(() -> shooterSubsystem.isAtSpeed(43.0, 2.0)),
                     // 轉速到了，直接呼叫你寫好的 Transport Command 送球！
                     transport.sys_runTransport()
                 )
