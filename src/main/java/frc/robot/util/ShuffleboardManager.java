@@ -12,30 +12,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 
 /**
  * Shuffleboard 集中管理器。
- * 
- * 在 RobotContainer 中建立一次即可。
- * 負責建立所有分頁 (Tab) 並提供各子系統取用。
- * 
- * ┌─────────────────────────────────────────────────────┐
- * │ Tab 規劃:                                           │
- * │                                                     │
- * │ 🏠 Main         → Field2d, Auto Chooser, Loop Time  │
- * │ 🔫 Shooter PID  → kV/kP/kI/kD + 示波圖              │
- * │ 🦾 IntakeArm PID→ kP/kI/kD/kG + 示波圖              │
- * │ 🔄 IntakeRoller  → kV/kP/kI/kD + 示波圖             │
- * │ 🚗 Swerve       → Rotor kP/kI/kD + 底盤速度         │
- * │ 🎯 AutoAim      → Rotation kP/kI/kD + 追蹤數據      │
- * └─────────────────────────────────────────────────────┘
  */
 public class ShuffleboardManager {
 
     // ═══════════════ Tabs ═══════════════
     private final ShuffleboardTab mainTab;
-    private final ShuffleboardTab shooterTab;
-    private final ShuffleboardTab intakeArmTab;
-    private final ShuffleboardTab intakeRollerTab;
     private final ShuffleboardTab swerveTab;
-    private final ShuffleboardTab autoAimTab;
 
     // ═══════════════ Main Tab Entries ═══════════════
     private GenericEntry loopTimeEntry;
@@ -44,20 +26,12 @@ public class ShuffleboardManager {
 
     public ShuffleboardManager() {
         mainTab        = Shuffleboard.getTab("Main");
-        shooterTab     = Shuffleboard.getTab("Shooter PID");
-        intakeArmTab   = Shuffleboard.getTab("IntakeArm PID");
-        intakeRollerTab= Shuffleboard.getTab("IntakeRoller PID");
         swerveTab      = Shuffleboard.getTab("Swerve");
-        autoAimTab     = Shuffleboard.getTab("AutoAim");
     }
 
     // ─── Getters for subsystems to use ───
     public ShuffleboardTab getMainTab()          { return mainTab; }
-    public ShuffleboardTab getShooterTab()       { return shooterTab; }
-    public ShuffleboardTab getIntakeArmTab()     { return intakeArmTab; }
-    public ShuffleboardTab getIntakeRollerTab()  { return intakeRollerTab; }
     public ShuffleboardTab getSwerveTab()        { return swerveTab; }
-    public ShuffleboardTab getAutoAimTab()       { return autoAimTab; }
 
     /**
      * 初始化 Main Tab 上的共用 Widget。
@@ -65,9 +39,6 @@ public class ShuffleboardManager {
      * @param autoChooser 自動模式選擇器
      */
     public void setupMainTab(Field2d field2d, SendableChooser<Command> autoChooser) {
-        // 場地圖 — 只透過 Shuffleboard 發佈（不可同時用 SmartDashboard.putData，
-        // 否則 Sendable 雙重綁定會導致其中一個路徑不更新）
-        // Glass/SimGUI 中請打開 /Shuffleboard/Main/Field 來查看
         mainTab.add("Field", field2d)
                .withWidget(BuiltInWidgets.kField)
                .withSize(6, 4)
