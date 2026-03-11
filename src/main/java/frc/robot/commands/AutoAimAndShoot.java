@@ -150,7 +150,7 @@ public class AutoAimAndShoot extends Command {
             // 中立區：朝固定角度射回己方聯盟區
             m_targetPosition = null; // 不需要目標點
             targetAngleRad = AutoAimConstants.getReturnAngleRad(isRed) 
-                + AutoAimConstants.kShooterAngleOffsetRad;
+                ;
         }
 
         // 3. 計算到目標的距離（己方區域用實際距離，中立區用估算）

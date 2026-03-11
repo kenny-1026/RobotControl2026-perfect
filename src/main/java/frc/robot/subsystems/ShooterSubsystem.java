@@ -168,7 +168,9 @@ public class ShooterSubsystem extends SubsystemBase {
             () -> stop()
         );
     }
-
+   /*public Command sys_idle(){
+    return this.run(()->setVelocity(ShooterConstants.kIdleRps)).withName("ShooterIdle");
+   }*/
     /**
      * 檢查目前轉速是否達到目標 (允許一點點誤差)
      * @param targetRps 目標轉速

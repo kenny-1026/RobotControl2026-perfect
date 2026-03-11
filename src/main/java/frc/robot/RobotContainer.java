@@ -166,6 +166,7 @@ public class RobotContainer {
 
         configureBindings();
         swerve.setDefaultCommand(manualDriveCommand);
+        //shooterSubsystem.setDefaultCommand((shooterSubsystem.sys_idle()));
         driverController.button(8).onTrue(Commands.runOnce(swerve::resetIMU)); // menu button
 
 

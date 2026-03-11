@@ -1,4 +1,4 @@
-  // Copyright (c) FIRST and other WPILib contributors.
+// Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
@@ -31,23 +31,23 @@ public final class Constants {
   public static final class LimelightConstants {
     // ── 安裝位置（機器人座標系）──
     // ⚠️ 請用捲尺實際量測後修改！
-    public static final double kForwardMeters = -0.24;   // 鏡頭距機器人中心往前 (m)
-    public static final double kSideMeters    = 0.21;   // 鏡頭距機器人中心往左 (m)，右為負
-    public static final double kUpMeters      = 0.60;   // 鏡頭距地面高度 (m)
-    public static final double kRollDegrees   = 0.0;    // 繞前後軸旋轉 (deg)
-    public static final double kPitchDegrees  = 20.0;   // 鏡頭仰角 (deg)，向上為正
-    public static final double kYawDegrees    = 0.0;    // 鏡頭水平旋轉 (deg)，向左為正
+    public static final double kForwardMeters = -0.17; // 鏡頭距機器人中心往前 (m)
+    public static final double kSideMeters = 0.23; // 鏡頭距機器人中心往左 (m)，右為負
+    public static final double kUpMeters = 0.52; // 鏡頭距地面高度 (m)
+    public static final double kRollDegrees = 0.0; // 繞前後軸旋轉 (deg)
+    public static final double kPitchDegrees = 60.0; // 鏡頭仰角 (deg)，向上為正
+    public static final double kYawDegrees = 0.0; // 鏡頭水平旋轉 (deg)，向左為正
 
     // ── 視覺融合過濾閾值 ──
-    public static final double kMaxAmbiguity       = 0.7;    // 單 Tag ambiguity 超過此值就丟棄
-    public static final double kMaxTagDistMeters   = 4.0;    // 單 Tag 距離超過此值就丟棄 (m)
-    public static final double kMaxGyroRateDps     = 720.0;  // 旋轉速度超過此值時不融合 (deg/s)
+    public static final double kMaxAmbiguity = 0.7; // 單 Tag ambiguity 超過此值就丟棄
+    public static final double kMaxTagDistMeters = 4.0; // 單 Tag 距離超過此值就丟棄 (m)
+    public static final double kMaxGyroRateDps = 720.0; // 旋轉速度超過此值時不融合 (deg/s)
 
     // ── 視覺融合信任度（標準差）──
-    public static final double kMultiTagXYStdDev   = 0.3;    // 多 Tag 交叉定位 XY 標準差 (m)
-    public static final double kSingleTagBaseStdDev = 0.5;   // 單 Tag 基礎 XY 標準差 (m)
-    public static final double kSingleTagDistScale = 0.15;   // 單 Tag 距離比例係數（越遠越不信）
-    public static final double kAngleStdDev        = 999999; // 角度不融合，完全信任 IMU
+    public static final double kMultiTagXYStdDev = 0.3; // 多 Tag 交叉定位 XY 標準差 (m)
+    public static final double kSingleTagBaseStdDev = 0.5; // 單 Tag 基礎 XY 標準差 (m)
+    public static final double kSingleTagDistScale = 0.15; // 單 Tag 距離比例係數（越遠越不信）
+    public static final double kAngleStdDev = 999999; // 角度不融合，完全信任 IMU
   }
 
   // ===== 遙測節流 =====
@@ -61,7 +61,7 @@ public final class Constants {
   public static final class AutoAimConstants {
     // ── 場地尺寸 ──
     public static final double kFieldLengthMeters = 16.541; // 場地總長度 (m)（官方 2026 REBUILT）
-    public static final double kFieldWidthMeters = 8.069;   // 場地總寬度 (m)
+    public static final double kFieldWidthMeters = 8.069; // 場地總寬度 (m)
     public static final double kFieldMidX = kFieldLengthMeters / 2.0; // 中場線 X ≈ 8.27m
 
     // ── Hub 目標座標（藍方原點座標系，單一來源） ──
@@ -70,17 +70,18 @@ public final class Constants {
     // 藍方 Hub: AprilTag 18-21, 24-27 中心
     // 紅方 Hub 由 kFieldLengthMeters - kHubX 自動推導（對稱場地）
     // ⚠️ 這些值是從 AprilTag 座標估算的 Hub 中心，只需維護藍方座標，紅方自動鏡像！
-    public static final double kHubX = 4.626;   // 藍方 Hub X 座標 (m)（場地左半部）
-    public static final double kHubY = 4.035;   // Hub Y 座標 (m)（場地中央，紅藍相同）
+    public static final double kHubX = 4.626; // 藍方 Hub X 座標 (m)（場地左半部）
+    public static final double kHubY = 4.035; // Hub Y 座標 (m)（場地中央，紅藍相同）
 
     // ── 中立區回傳角度（藍方基準） ──
     // 藍方聯盟區在場地左邊(-X) → 朝 180° 射
     // 紅方由 flipAngle() 自動計算（π → 0）
-    public static final double kReturnAngleRad =180; // 藍方基準：朝場地正左 (180°)
+    public static final double kReturnAngleRad = Math.PI; // 藍方基準：朝場地正左 (180°)
 
     /**
      * 取得己方 Hub 的場地座標（自動處理紅藍鏡像）
      * WPILib 座標系始終以藍方為原點，紅方 Hub = (fieldLength - blueHubX, blueHubY)
+     * 
      * @param isRed 是否為紅方聯盟
      * @return Hub 中心的 Translation2d
      */
@@ -93,6 +94,7 @@ public final class Constants {
     /**
      * 取得中立區回傳角度（自動處理紅藍鏡像）
      * 藍方朝 π（場地正左），紅方朝 0（場地正右）
+     * 
      * @param isRed 是否為紅方聯盟
      * @return 回傳方向角度 (rad)
      */
@@ -104,8 +106,9 @@ public final class Constants {
     /**
      * 判斷機器人是否在己方場域
      * 藍方己方在 X < kFieldMidX，紅方己方在 X > kFieldMidX
+     * 
      * @param robotX 機器人當前 X 座標 (m)
-     * @param isRed 是否為紅方聯盟
+     * @param isRed  是否為紅方聯盟
      * @return true = 在己方場域
      */
     public static boolean isInOwnZone(double robotX, boolean isRed) {
@@ -116,30 +119,30 @@ public final class Constants {
     public static final double kRotation_kP = 4.0;
     public static final double kRotation_kI = 0.0;
     public static final double kRotation_kD = 0.1;
-    public static final double kRotationToleranceDeg = 2.0; // 角度容許誤差 (度)
+    public static final double kRotationToleranceDeg = 8.0; // 角度容許誤差 (度)
 
     // ── 距離 → 射手 RPS 多項式曲線擬合 ──
     // 由實際測量 8 個數據點 (1m~5m) 做 2 次多項式迴歸得出：
-    //   RPS(d) = kRpsA * d² + kRpsB * d + kRpsC
+    // RPS(d) = kRpsA * d² + kRpsB * d + kRpsC
     // 最大擬合誤差 ≈ 1.3 RPS（在容許範圍內）
     //
     // 原始測量數據（保留作為校驗參考）：
-    //   1.0m→35, 1.5m→40, 2.0m→45, 2.5m→50,
-    //   3.0m→55, 3.5m→60, 4.0m→65, 5.0m→70
+    // 1.0m→35, 1.5m→40, 2.3m→45, 2.95m→50,
+    // 3.5m→55, 3.5m→60, 4.0m→65, 5.0m→70
     //
     // ⚠️ 如果更換射手機構或重新測量，請用 fit_rps.py 重新擬合係數！
-    public static final double kRpsA = 4.0; // d² 係數
-    public static final double kRpsB = -3.6; // d  係數
-    public static final double kRpsC = 43.6; // 常數項
+    public static final double kRpsA = 1.17; // d² 係數
+    public static final double kRpsB = 1.2734; // d 係數
+    public static final double kRpsC = 38.7156; // 常數項
 
     // 安全限制：超出測量範圍時 clamp 到邊界值
-    public static final double kRpsMinDistance = 1.0;  // 最近測量距離 (m)
-    public static final double kRpsMaxDistance = 5.0;  // 最遠測量距離 (m)
-    public static final double kRpsMin = 35.0;         // 最低 RPS（對應最近距離）
-    public static final double kRpsMax = 75.0;         // 最高 RPS（對應最遠距離）
+    public static final double kRpsMinDistance = 1.0; // 最近測量距離 (m)
+    public static final double kRpsMaxDistance = 5.0; // 最遠測量距離 (m)
+    public static final double kRpsMin = 35.0; // 最低 RPS（對應最近距離）
+    public static final double kRpsMax = 75.0; // 最高 RPS（對應最遠距離）
 
     // 射手速度容許誤差 (RPS)
-    public static final double kShooterToleranceRps = 10.0;
+    public static final double kShooterToleranceRps = 20.0;
 
     // 中立區回傳球固定射手 RPS
     // 因為距離遠且不需要精準進 Hub，用固定高速射回即可
@@ -175,15 +178,18 @@ public final class Constants {
 
     // ── PID 初始值 (Slot 0, VelocityVoltage) ──
     // ⚠ 透過 Shuffleboard TunableNumber 可即時調參，這裡是開機預設值
-    public static final double kDefaultKV = 0.16;
-    public static final double kDefaultKP = 0.6;
+    public static final double kDefaultKV = 0.12;
+    public static final double kDefaultKP = 1.2;// .6
     public static final double kDefaultKI = 0.0;
     public static final double kDefaultKD = 0.0;
     public static final double kDefaultKS = 0.0;
 
     // ── 其他 ──
     public static final double kTriggerDeadband = 0.05;
+    public static final double kIdleRps = 52;
   }
+
+  
 
   // ===== 輸送帶 (Transport) 常數 =====
   public static final class TransportConstants {
@@ -192,9 +198,9 @@ public final class Constants {
     public static final int kTransportMotorID = 30;
 
     // ── 速度目標 (RPS) ──
-    public static final double kTransportRps = -35.0;       // 輸送帶正常速度
-    public static final double kUpToShootRps = -80.0;       // 上膛推球速度
-    public static final double kSlowTransportRps = 40.0;   // 慢速輸送帶 (Intake 時)
+    public static final double kTransportRps = -25.0; // 輸送帶正常速度
+    public static final double kUpToShootRps = -65.0; // 上膛推球速度
+    public static final double kSlowTransportRps = 20.0; // 慢速輸送帶 (Intake 時)
 
     // ── PID 初始值 (Slot 0, VelocityVoltage) ──
     public static final double kDefaultKV = 0.12;
@@ -242,7 +248,7 @@ public final class Constants {
     public static final double kDefaultKP = 2.0;
     public static final double kDefaultKI = 0.0;
     public static final double kDefaultKD = 0.1;
-    public static final double kDefaultKG = 0.1;  // 重力補償
+    public static final double kDefaultKG = 0.1; // 重力補償
   }
 
   // ===== 手動駕駛 (ManualDrive) 常數 =====
@@ -250,7 +256,7 @@ public final class Constants {
     // ── 搖桿倍率 ──
     public static final double kXMultiplier = 1.0;
     public static final double kYMultiplier = 1.0;
-    public static final double kZMultiplier = -0.4;
+    public static final double kZMultiplier = -0.6;
 
     // ── 搖桿死區 ──
     public static final double kXDeadzone = 0.05;
@@ -274,19 +280,19 @@ public final class Constants {
     public static final double kTheta_kD = 0.0;
 
     // ── 容許誤差 ──
-    public static final double kXTolerance = 0.01;     // 公尺
-    public static final double kYTolerance = 0.01;     // 公尺
-    public static final double kThetaTolerance = 2.0;  // 度
+    public static final double kXTolerance = 0.01; // 公尺
+    public static final double kYTolerance = 0.01; // 公尺
+    public static final double kThetaTolerance = 2.0; // 度
 
     // ── 輸出限制 ──
     public static final double kSpeedMultiplier = 6.0;
-    public static final double kMaxTranslationSpeed = 1.8;  // m/s
-    public static final double kMaxRotationSpeed = 1.5;     // rad/s
+    public static final double kMaxTranslationSpeed = 1.8; // m/s
+    public static final double kMaxRotationSpeed = 1.5; // rad/s
   }
 
   public static final class RoboArmConstants {
     public static final int kShooterLeftMotorID = 21;
-    
+
     public static final boolean kShoulderRightMotorInverted = false;
   }
 
@@ -336,24 +342,25 @@ public final class Constants {
     // Swerve kinematics (order: left front, right front, left rear, right rear)
     // Swerve kinematics（順序：左前，右前，左後，右後）
     public static final SwerveDriveKinematics kSwerveKinematics = new SwerveDriveKinematics(
-      new Translation2d(kWheelBase / 2, kTrackWidth / 2),
-      new Translation2d(kWheelBase / 2, -kTrackWidth / 2),
-      new Translation2d(-kWheelBase / 2, kTrackWidth / 2),
-      new Translation2d(-kWheelBase / 2, -kTrackWidth / 2));
+        new Translation2d(kWheelBase / 2, kTrackWidth / 2),
+        new Translation2d(kWheelBase / 2, -kTrackWidth / 2),
+        new Translation2d(-kWheelBase / 2, kTrackWidth / 2),
+        new Translation2d(-kWheelBase / 2, -kTrackWidth / 2));
 
     // Camera centered kinematics
     public static final SwerveDriveKinematics kSwerveKinematicsCamera = new SwerveDriveKinematics(
-      new Translation2d(0, kTrackWidth / 2),
-      new Translation2d(0, -kTrackWidth / 2),
-      new Translation2d(-kWheelBase, kTrackWidth / 2),
-      new Translation2d(-kWheelBase, -kTrackWidth / 2));
+        new Translation2d(0, kTrackWidth / 2),
+        new Translation2d(0, -kTrackWidth / 2),
+        new Translation2d(-kWheelBase, kTrackWidth / 2),
+        new Translation2d(-kWheelBase, -kTrackWidth / 2));
 
     // Rotor PID constants
-    // Ref: https://www.ni.com/zh-tw/shop/labview/pid-theory-explained.html#section-366173388
-    public static final double kRotor_kP = 0.005; // critical damping: 0.024 ~ 0.025 
+    // Ref:
+    // https://www.ni.com/zh-tw/shop/labview/pid-theory-explained.html#section-366173388
+    public static final double kRotor_kP = 0.005; // critical damping: 0.024 ~ 0.025
     public static final double kRotor_kI = 0.001; // period: 0.169s
     public static final double kRotor_kD = 0.0001;
-    public static final double kRotor_maxVelocity = 360; //control max motor output
+    public static final double kRotor_maxVelocity = 360; // control max motor output
     public static final double kRotor_maxAcceleration = kRotor_maxVelocity * 5;
 
     // // Rotor PID constants soft
@@ -364,7 +371,8 @@ public final class Constants {
     // Wheel diameter
     // 輪徑
     // OD(outer diameter) 4 inches = 0.1016 meters
-    // Ref: https://www.swervedrivespecialties.com/collections/mk4i-parts/products/billet-wheel-4d-x-1-5w-bearing-bore
+    // Ref:
+    // https://www.swervedrivespecialties.com/collections/mk4i-parts/products/billet-wheel-4d-x-1-5w-bearing-bore
     // 要包含胎皮受到重量的厚度，建議重新量測並再次確認
     public static final double kWheelDiameterMeters = 0.1;
 
@@ -373,7 +381,7 @@ public final class Constants {
     // Throttle 齒輪比率（馬達轉動輪子一圈所需的圈數）
     // MK4i底盤: 8.14 for L1 - Standard, 6.75 for L2 - Fast, 6.12 for L3 - Very Fast
     // Ref: https://www.swervedrivespecialties.com/products/mk4i-swerve-module
-    public static final double kThrottleGearRatio = 6.12; 
+    public static final double kThrottleGearRatio = 6.12;
 
     // Throttle velocity conversion constant
     // Throttle 速度轉換 Constant
@@ -399,19 +407,19 @@ public final class Constants {
     // ≈ 5.13 m/s (用 0.1m 輪徑)
     // SDS 官方建議值約 5.21 m/s (用 4 inch = 0.1016m)
     // 這裡取計算值，所有速度相關的地方都引用這個常數
-    public static final double kMaxPhysicalSpeedMps = 
-        (6000.0 / 60.0 / kThrottleGearRatio) * kWheelDiameterMeters * Math.PI;
+    public static final double kMaxPhysicalSpeedMps = (6000.0 / 60.0 / kThrottleGearRatio) * kWheelDiameterMeters
+        * Math.PI;
   }
 
   // Voltage compensation
   public static final double kVoltageCompensation = 12.0;
-  
+
   public static final class AutoConstants {
     public static final double kMaxSpeedMetersPerSecond = SwerveConstants.kMaxPhysicalSpeedMps;
     public static final double kMaxAccelerationMetersPerSecondSquared = 4;
-    public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI/10;
-    public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI/5;
-    
+    public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI / 10;
+    public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI / 5;
+
     public static final double kTranslationController_kP = 1.3;
     public static final double kTranslationController_kI = 0.001;
     public static final double kTranslationController_kD = 0.005;
@@ -421,9 +429,8 @@ public final class Constants {
     public static final double kRotationController_kD = 0.001;
 
     // Constraint for the motion profiled robot angle controller
-    public static final TrapezoidProfile.Constraints kThetaControllerConstraints =
-        new TrapezoidProfile.Constraints(
-            kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
+    public static final TrapezoidProfile.Constraints kThetaControllerConstraints = new TrapezoidProfile.Constraints(
+        kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
   }
-  
+
 }
