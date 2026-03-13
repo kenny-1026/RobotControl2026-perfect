@@ -299,21 +299,21 @@ public final class Constants {
   // Swerve constants
   public static final class SwerveConstants {
     /** DRIVETRAIN CAN bus 物件（Phoenix 6 v26+ 要求使用 CANBus 而非 String） */
-    public static final CANBus kDrivetrainCANBus = new CANBus("DRIVETRAIN");
+    public static final CANBus kDrivetrainCANBus = new CANBus("DRIVETRAIN"); 
 
     public static final int kPigeonID = 0;
 
     // Rotor IDs
-    public static final int kLeftFrontRotorID = 3;
-    public static final int kRightFrontRotorID = 5;
-    public static final int kLeftRearRotorID = 1;
-    public static final int kRightRearRotorID = 7;
+    public static final int kLeftFrontRotorID = 7;
+    public static final int kRightFrontRotorID = 1;
+    public static final int kLeftRearRotorID = 5;
+    public static final int kRightRearRotorID = 3;
 
     // Throttle IDs
-    public static final int kLeftFrontThrottleID = 4;
-    public static final int kRightFrontThrottleID = 6;
-    public static final int kLeftRearThrottleID = 2;
-    public static final int kRightRearThrottleID = 8;
+    public static final int kLeftFrontThrottleID = 8;
+    public static final int kRightFrontThrottleID = 2;
+    public static final int kLeftRearThrottleID = 6;
+    public static final int kRightRearThrottleID = 4;
 
     // Rotor encoder IDs
     public static final int kLeftFrontCANCoderID = 12;
@@ -322,7 +322,7 @@ public final class Constants {
     public static final int kRightRearCANCoderID = 14;
 
     // Rotor encoder & motor inversion
-    public static final boolean kRotorEncoderDirection = false;
+    public static final boolean kRotorEncoderDirection = true;
 
     public static final boolean kLeftFrontRotorInverted = true;
     public static final boolean kRightFrontRotorInverted = true;
