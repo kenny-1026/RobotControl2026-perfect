@@ -83,7 +83,7 @@
   "folder": "New trie",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 45.0
+    "rotation": 70.0
   },
   "useDefaultConstraints": true
 }
