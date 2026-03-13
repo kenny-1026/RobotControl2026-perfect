@@ -44,7 +44,7 @@ public class ManualDrive extends Command {
         // 在源頭反轉，後續所有邏輯都用 WPILib 標準正負號
         double xCtl = -mJoystick.getLeftY();  // 往前推 → +X (前進)
         double yCtl = -mJoystick.getLeftX();  // 往左推 → +Y (左移)
-        double zCtl = mJoystick.getRightX();  // 右搖桿不反轉（順時針=正）
+        double zCtl = -mJoystick.getRightX();  // 右搖桿不反轉（順時針=正）
 
         // SmartDashboard.putNumber("xCtl", xCtl);
         // SmartDashboard.putNumber("yCtl", yCtl);
