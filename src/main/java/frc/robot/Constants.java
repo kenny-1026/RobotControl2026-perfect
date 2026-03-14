@@ -31,11 +31,11 @@ public final class Constants {
   public static final class LimelightConstants {
     // ── 安裝位置（機器人座標系）──
     // ⚠️ 請用捲尺實際量測後修改！
-    public static final double kForwardMeters = -0.17; // 鏡頭距機器人中心往前 (m)
-    public static final double kSideMeters = 0.23; // 鏡頭距機器人中心往左 (m)，右為負
-    public static final double kUpMeters = 0.52; // 鏡頭距地面高度 (m)
+    public static final double kForwardMeters = -0.13; // 鏡頭距機器人中心往前 (m)
+    public static final double kSideMeters = -0.225; // 鏡頭距機器人中心往左 (m)，右為負
+    public static final double kUpMeters = 0.50; // 鏡頭距地面高度 (m)
     public static final double kRollDegrees = 0.0; // 繞前後軸旋轉 (deg)
-    public static final double kPitchDegrees = 60.0; // 鏡頭仰角 (deg)，向上為正
+    public static final double kPitchDegrees = 34.0; // 鏡頭仰角 (deg)，向上為正
     public static final double kYawDegrees = 0.0; // 鏡頭水平旋轉 (deg)，向左為正
 
     // ── 視覺融合過濾閾值 ──
@@ -163,7 +163,7 @@ public final class Constants {
     // 如果射手出口在機器人正後方（-X 方向），設為 Math.PI
     // 如果射手出口在其他角度，填入相應弧度值
     // ⚠️ 請根據實際機器人射手安裝方向設定！
-    public static final double kShooterAngleOffsetRad = 0.2; // TODO: 確認射手方向（假設射手在背面）
+    public static final double kShooterAngleOffsetRad = 0; //  0.2 -> 0 change by boyu 0314 TODO: 確認射手方向（假設射手在背面）
   }
 
   public static class OperatorConstants {
@@ -178,8 +178,8 @@ public final class Constants {
 
     // ── PID 初始值 (Slot 0, VelocityVoltage) ──
     // ⚠ 透過 Shuffleboard TunableNumber 可即時調參，這裡是開機預設值
-    public static final double kDefaultKV = 0.12;
-    public static final double kDefaultKP = 1.2;// .6
+    public static final double kDefaultKV = 0.1;
+    public static final double kDefaultKP = 0.6;// .6
     public static final double kDefaultKI = 0.0;
     public static final double kDefaultKD = 0.0;
     public static final double kDefaultKS = 0.0;

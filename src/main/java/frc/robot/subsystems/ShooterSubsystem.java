@@ -128,8 +128,9 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     private void stop() {
+        // leaderMotor.setControl(velocityRequest.withVelocity(0));
         leaderMotor.stopMotor();
-        followerMotor.stopMotor();
+        // followerMotor.stopMotor();
     }
 
     /**

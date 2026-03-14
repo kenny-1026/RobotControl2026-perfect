@@ -160,7 +160,7 @@ public class Swerve extends SubsystemBase {
     }
 
     private void initFields() {
-        mPigeonIMU = new Pigeon2(SwerveConstants.kPigeonID);
+        mPigeonIMU = new Pigeon2(SwerveConstants.kPigeonID, "DRIVETRAIN");
 
         // ── 快取 Pigeon2 Signal 並設定 CAN 更新頻率 ──
         // Yaw: getRotation2d() 內部會讀取，設定 100Hz（里程計關鍵路徑）
