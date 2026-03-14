@@ -239,7 +239,7 @@ public class Swerve extends SubsystemBase {
                 // 統一使用藍方原點座標系（WPILib 標準）
                 // PathPlanner 的 isAllianceRed() 會自動鏡射路徑，不需要手動切換紅方座標
                 LimelightHelpers.PoseEstimate mt2 = 
-                    LimelightHelpers.getBotPoseEstimate_wpiBlue(limelightName);
+                    LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(limelightName);
                 
                 boolean doRejectUpdate = false;
 
@@ -565,7 +565,7 @@ public class Swerve extends SubsystemBase {
      */
     public void resetPoseToLimelight() {
         LimelightHelpers.PoseEstimate mt2 = 
-            LimelightHelpers.getBotPoseEstimate_wpiBlue(limelightName);
+            LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(limelightName);
 
         if (mt2 != null && mt2.tagCount > 0) {
             // 只使用 Limelight 的 XY 位置，角度保持 IMU 的值
