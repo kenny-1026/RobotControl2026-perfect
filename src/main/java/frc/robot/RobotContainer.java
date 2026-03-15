@@ -65,6 +65,7 @@ public class RobotContainer {
     // private final IntakeArmSubsystem intakeArm = new IntakeArmSubsystem(shuffleboardManager.getIntakeArmTab());
     private final IntakeRollerSubsystem intakeRoller = new IntakeRollerSubsystem(shuffleboardManager.getIntakeRollerTab());
     private final TransportSubsystem transport = new TransportSubsystem();
+    private final IntakeArmSubsystem intakeArm = new IntakeArmSubsystem();
 
     private Command autoCommand;
 
@@ -320,6 +321,9 @@ public class RobotContainer {
         // transport
         driverController.x().whileTrue(
             transport.sys_runTransport()
+        );
+        intakeArm.setDefaultCommand(
+            intakeArm.sys_manualMove(() -> -driverController.getRightY())
         );
     }
 
