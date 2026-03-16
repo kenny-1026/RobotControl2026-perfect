@@ -281,13 +281,16 @@ public class RobotContainer {
                 shuffleboardManager.getAutoAimTab())
                 .deadlineWith(
                         Commands.sequence(
-                                intakeArm.runOnce(() -> intakeArm.setManualSpeed(1.0)), // 拉上來
-                                Commands.waitTime(Seconds.of(0.4)),
-                                intakeArm.runOnce(() -> intakeArm.setManualSpeed(0.0)), // 放下去
-                                Commands.waitTime(Seconds.of(0.4))
-                        ).repeatedly()
-                )
-                .finallyDo(() -> intakeArm.setManualSpeed(0))
+                                // 持續給 1.0 的速度，維持 0.4 秒
+                                intakeArm.run(() -> intakeArm.setManualSpeed(1.0))
+                                        .withTimeout(1.8),
+                                
+                                // 持續給 0.0 的速度，維持 0.4 秒
+                                intakeArm.run(() -> intakeArm.setManualSpeed(0.0))
+                                        .withTimeout(1.8)
+                        ).repeatedly() // 不斷循環
+                        )
+                        .finallyDo(() -> intakeArm.setManualSpeed(0))
         );
 
         // shooterSubsystem.sys_manualShoot(1.0);
