@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -39,6 +40,13 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
     m_shuffleboard = m_robotContainer.getShuffleboardManager();
+    UsbCamera driverCam = CameraServer.startAutomaticCapture();
+    
+    // 設定較低的解析度 (160x120 或 320x240 對於單純看路已經足夠)
+    driverCam.setResolution(160, 120); 
+    
+    // 降低 FPS
+    driverCam.setFPS(15);
   }
 
   /**
