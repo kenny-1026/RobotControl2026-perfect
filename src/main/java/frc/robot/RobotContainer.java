@@ -282,12 +282,12 @@ public class RobotContainer {
                 .deadlineWith(
                         Commands.sequence(
                                 // 持續給 1.0 的速度，維持 0.4 秒
-                                intakeArm.run(() -> intakeArm.setManualSpeed(-1.0))
-                                        .withTimeout(1.8),
+                                intakeArm.run(() -> intakeArm.setManualSpeed(-0.5))
+                                        .withTimeout(0.3),
                                 
                                 // 持續給 0.0 的速度，維持 0.4 秒
-                                intakeArm.run(() -> intakeArm.setManualSpeed(0.0))
-                                        .withTimeout(1.8)
+                                intakeArm.run(() -> intakeArm.setManualSpeed(0.5))
+                                        .withTimeout(0.3)
                         ).repeatedly() // 不斷循環
                         )
                         .finallyDo(() -> intakeArm.setManualSpeed(0))
@@ -316,7 +316,7 @@ public class RobotContainer {
         // // 按下 B 鍵，Intake 自動收回到 0 圈 (原點)
         driverController.b().whileTrue(
                 Commands.parallel(
-                        intakeRoller.sys_outtake(),
+                        // intakeRoller.sys_outtake(),
                         transport.sys_reverseTransport()));
 
         // ==========================================

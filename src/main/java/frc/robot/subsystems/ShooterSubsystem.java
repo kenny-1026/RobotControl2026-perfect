@@ -216,6 +216,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
         // 安全 clamp，防止曲線在邊界附近超出合理範圍
         return MathUtil.clamp(rps, AutoAimConstants.kRpsMin, AutoAimConstants.kRpsMax);
+        
     }
 
     @Override

@@ -35,7 +35,7 @@ public final class Constants {
     public static final double kSideMeters = -0.225; // 鏡頭距機器人中心往左 (m)，右為負
     public static final double kUpMeters = 0.50; // 鏡頭距地面高度 (m)
     public static final double kRollDegrees = 0.0; // 繞前後軸旋轉 (deg)
-    public static final double kPitchDegrees = 34.0; // 鏡頭仰角 (deg)，向上為正
+    public static final double kPitchDegrees = 35.0; // 鏡頭仰角 (deg)，向上為正
     public static final double kYawDegrees = 0.0; // 鏡頭水平旋轉 (deg)，向左為正
 
     // ── 視覺融合過濾閾值 ──
@@ -47,7 +47,7 @@ public final class Constants {
     public static final double kMultiTagXYStdDev = 0.3; // 多 Tag 交叉定位 XY 標準差 (m)
     public static final double kSingleTagBaseStdDev = 0.5; // 單 Tag 基礎 XY 標準差 (m)
     public static final double kSingleTagDistScale = 0.15; // 單 Tag 距離比例係數（越遠越不信）
-    public static final double kAngleStdDev = 999999; // 角度不融合，完全信任 IMU
+    public static final double kAngleStdDev = 5; // 角度不融合，完全信任 IMU
   }
 
   // ===== 遙測節流 =====
@@ -119,7 +119,7 @@ public final class Constants {
     public static final double kRotation_kP = 4.0;
     public static final double kRotation_kI = 0.0;
     public static final double kRotation_kD = 0.1;
-    public static final double kRotationToleranceDeg = 8.0; // 角度容許誤差 (度)
+    public static final double kRotationToleranceDeg = 5.0; // 角度容許誤差 (度)
 
     // ── 距離 → 射手 RPS 多項式曲線擬合 ──
     // 由實際測量 8 個數據點 (1m~5m) 做 2 次多項式迴歸得出：
@@ -131,9 +131,9 @@ public final class Constants {
     // 3.5m→55, 3.5m→60, 4.0m→65, 5.0m→70
     //
     // ⚠️ 如果更換射手機構或重新測量，請用 fit_rps.py 重新擬合係數！
-    public static final double kRpsA = 1.17; // d² 係數
-    public static final double kRpsB = 1.2734; // d 係數
-    public static final double kRpsC = 38.7156; // 常數項
+    public static final double kRpsA = 1.365; // d² 係數
+    public static final double kRpsB = -2.584; // d 係數
+    public static final double kRpsC = 46.744; // 常數項
 
     // 安全限制：超出測量範圍時 clamp 到邊界值
     public static final double kRpsMinDistance = 1.0; // 最近測量距離 (m)
@@ -142,7 +142,7 @@ public final class Constants {
     public static final double kRpsMax = 75.0; // 最高 RPS（對應最遠距離）
 
     // 射手速度容許誤差 (RPS)
-    public static final double kShooterToleranceRps = 20.0;
+    public static final double kShooterToleranceRps = 15.0;
 
     // 中立區回傳球固定射手 RPS
     // 因為距離遠且不需要精準進 Hub，用固定高速射回即可
@@ -178,8 +178,8 @@ public final class Constants {
 
     // ── PID 初始值 (Slot 0, VelocityVoltage) ──
     // ⚠ 透過 Shuffleboard TunableNumber 可即時調參，這裡是開機預設值
-    public static final double kDefaultKV = 0.1;
-    public static final double kDefaultKP = 0.6;// .6
+    public static final double kDefaultKV = 0.12;
+    public static final double kDefaultKP = 0.65;// .6
     public static final double kDefaultKI = 0.0;
     public static final double kDefaultKD = 0.0;
     public static final double kDefaultKS = 0.0;
@@ -198,7 +198,7 @@ public final class Constants {
     public static final int kTransportMotorID = 30;
 
     // ── 速度目標 (RPS) ──
-    public static final double kTransportRps = -25.0; // 輸送帶正常速度
+    public static final double kTransportRps = -30.0; // 輸送帶正常速度
     public static final double kUpToShootRps = -65.0; // 上膛推球速度
     public static final double kSlowTransportRps = 20.0; // 慢速輸送帶 (Intake 時)
 
