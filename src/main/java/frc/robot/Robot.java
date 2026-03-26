@@ -43,7 +43,7 @@ public class Robot extends TimedRobot {
     UsbCamera driverCam = CameraServer.startAutomaticCapture();
     
     // 設定較低的解析度 (160x120 或 320x240 對於單純看路已經足夠)
-    driverCam.setResolution(160, 120); 
+    driverCam.setResolution(320, 240); 
     
     // 降低 FPS
     driverCam.setFPS(15);

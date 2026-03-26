@@ -35,7 +35,7 @@ public final class Constants {
     public static final double kSideMeters = -0.225; // 鏡頭距機器人中心往左 (m)，右為負
     public static final double kUpMeters = 0.50; // 鏡頭距地面高度 (m)
     public static final double kRollDegrees = 0.0; // 繞前後軸旋轉 (deg)
-    public static final double kPitchDegrees = 35.0; // 鏡頭仰角 (deg)，向上為正
+    public static final double kPitchDegrees = 21.0; // 鏡頭仰角 (deg)，向上為正
     public static final double kYawDegrees = 0.0; // 鏡頭水平旋轉 (deg)，向左為正
 
     // ── 視覺融合過濾閾值 ──
@@ -131,9 +131,9 @@ public final class Constants {
     // 3.5m→55, 3.5m→60, 4.0m→65, 5.0m→70
     //
     // ⚠️ 如果更換射手機構或重新測量，請用 fit_rps.py 重新擬合係數！
-    public static final double kRpsA = 1.365; // d² 係數
-    public static final double kRpsB = -2.584; // d 係數
-    public static final double kRpsC = 46.744; // 常數項
+    public static final double kRpsA = 1.17; // d² 係數
+    public static final double kRpsB = -1.42; // d 係數
+    public static final double kRpsC = 45.06; // 常數項
 
     // 安全限制：超出測量範圍時 clamp 到邊界值
     public static final double kRpsMinDistance = 1.0; // 最近測量距離 (m)
@@ -178,7 +178,7 @@ public final class Constants {
 
     // ── PID 初始值 (Slot 0, VelocityVoltage) ──
     // ⚠ 透過 Shuffleboard TunableNumber 可即時調參，這裡是開機預設值
-    public static final double kDefaultKV = 0.12;
+    public static final double kDefaultKV = 0.13;
     public static final double kDefaultKP = 0.65;// .6
     public static final double kDefaultKI = 0.0;
     public static final double kDefaultKD = 0.0;

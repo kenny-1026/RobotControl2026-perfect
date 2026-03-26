@@ -257,12 +257,8 @@ public class RobotContainer {
         // Drive2Tag：按住 A 鍵自動對位 AprilTag
         // 額外 require shooter + transport → 若 AutoAimAndShoot 正在運行會被自動取消
         driverController.a().whileTrue(
-                new Drive2Tag(swerve, Constants.kLimelightName, -1.45, 0.0, 0.0)
-                        .alongWith(
-                                Commands.runOnce(() -> {
-                                    shooterSubsystem.stopShooter();
-                                    transport.stopTransport();
-                                }, shooterSubsystem, transport)));
+                transport.sys_reverseTransport()
+                );
 
         // AutoAimAndShoot：按住右板機自動瞄準 + 依距離調整射手速度 + 達速對準後自動發射
         
@@ -283,11 +279,11 @@ public class RobotContainer {
                         Commands.sequence(
                                 // 持續給 1.0 的速度，維持 0.4 秒
                                 intakeArm.run(() -> intakeArm.setManualSpeed(-0.5))
-                                        .withTimeout(0.3),
+                                        .withTimeout(0.2),
                                 
                                 // 持續給 0.0 的速度，維持 0.4 秒
-                                intakeArm.run(() -> intakeArm.setManualSpeed(0.5))
-                                        .withTimeout(0.3)
+                                intakeArm.run(() -> intakeArm.setManualSpeed(0.0))
+                                        .withTimeout(0.5)
                         ).repeatedly() // 不斷循環
                         )
                         .finallyDo(() -> intakeArm.setManualSpeed(0))
@@ -316,7 +312,7 @@ public class RobotContainer {
         // // 按下 B 鍵，Intake 自動收回到 0 圈 (原點)
         driverController.b().whileTrue(
                 Commands.parallel(
-                        // intakeRoller.sys_outtake(),
+                        intakeRoller.sys_outtake(),
                         transport.sys_reverseTransport()));
 
         // ==========================================

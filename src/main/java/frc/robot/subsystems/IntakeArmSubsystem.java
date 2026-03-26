@@ -89,7 +89,7 @@ public class IntakeArmSubsystem extends SubsystemBase {
         TalonFXConfiguration config = new TalonFXConfiguration();
 
         // 1. 設定為 Brake (煞車) 模式：手臂這類抗重力機構，絕對要用 Brake，不然沒電會掉下來砸壞東西
-        config.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+        config.MotorOutput.NeutralMode = NeutralModeValue.Coast;
         
         // 2. 設定軟體限位 (Soft Limits) - 這是保護機構的關鍵
         // 為了安全，剛開始測試建議先關閉，等確認方向與範圍後再開啟
