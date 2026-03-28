@@ -422,12 +422,12 @@ public final class Constants {
     public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI / 10;
     public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI / 5;
 
-    public static final double kTranslationController_kP = 1.3;
-    public static final double kTranslationController_kI = 0.001;
+    public static final double kTranslationController_kP = 1.5;
+    public static final double kTranslationController_kI = 0.003;
     public static final double kTranslationController_kD = 0.005;
 
     public static final double kRotationController_kP = 0.2;
-    public static final double kRotationController_kI = 0.005;
+    public static final double kRotationController_kI = 0.006;
     public static final double kRotationController_kD = 0.001;
 
     // Constraint for the motion profiled robot angle controller
