@@ -47,7 +47,7 @@ public final class Constants {
     public static final double kMultiTagXYStdDev = 0.3; // 多 Tag 交叉定位 XY 標準差 (m)
     public static final double kSingleTagBaseStdDev = 0.5; // 單 Tag 基礎 XY 標準差 (m)
     public static final double kSingleTagDistScale = 0.15; // 單 Tag 距離比例係數（越遠越不信）
-    public static final double kAngleStdDev = 5; // 角度不融合，完全信任 IMU
+    public static final double kAngleStdDev = 99999; // 角度不融合，完全信任 IMU
   }
 
   // ===== 遙測節流 =====
@@ -220,7 +220,7 @@ public final class Constants {
     public static final int kFollowerMotorID = 35;
 
     // ── 速度目標 (RPS) ──
-    public static final double kIntakeTargetRps = 60.0;
+    public static final double kIntakeTargetRps = 75.0;
     public static final double kOuttakeTargetRps = -70.0;
 
     // ── PID 初始值 (Slot 0, VelocityVoltage) ──
