@@ -137,4 +137,11 @@ public class TransportSubsystem extends SubsystemBase {
             this::stop
         );
     }
+
+    public Command sys_reverseroller() {
+        return this.runEnd(
+            () -> up_to_shoot.setControl(upToShootRequest.withVelocity(-TransportConstants.kUpToShootRps)), 
+            this::stop
+        );
+    }
 }

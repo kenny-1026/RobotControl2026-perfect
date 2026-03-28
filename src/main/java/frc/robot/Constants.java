@@ -61,8 +61,10 @@ public final class Constants {
   public static final class AutoAimConstants {
     // ── 場地尺寸 ──
     public static final double kFieldLengthMeters = 16.541; // 場地總長度 (m)（官方 2026 REBUILT）
+    public static final double kFieldZoneSize = 4.03; // 場地總長度 (m)（官方 2026 REBUILT）
     public static final double kFieldWidthMeters = 8.069; // 場地總寬度 (m)
-    public static final double kFieldMidX = kFieldLengthMeters / 2.0; // 中場線 X ≈ 8.27m
+    public static final double kFieldMidXRed = kFieldLengthMeters - kFieldZoneSize; // 中場線 X ≈ 8.27m
+    public static final double kFieldMidXBlue = kFieldZoneSize; // 中場線 X ≈ 8.27m
 
     // ── Hub 目標座標（藍方原點座標系，單一來源） ──
     // 2026 REBUILT: Hub 在場地中央區域，不在牆壁邊！
@@ -112,7 +114,7 @@ public final class Constants {
      * @return true = 在己方場域
      */
     public static boolean isInOwnZone(double robotX, boolean isRed) {
-      return isRed ? (robotX > kFieldMidX) : (robotX < kFieldMidX);
+      return isRed ? (robotX > kFieldMidXRed) : (robotX < kFieldMidXBlue);
     }
 
     // 旋轉 PID（控制底盤面向目標）
@@ -142,7 +144,7 @@ public final class Constants {
     public static final double kRpsMax = 75.0; // 最高 RPS（對應最遠距離）
 
     // 射手速度容許誤差 (RPS)
-    public static final double kShooterToleranceRps = 15.0;
+    public static final double kShooterToleranceRps = 5.0;
 
     // 中立區回傳球固定射手 RPS
     // 因為距離遠且不需要精準進 Hub，用固定高速射回即可

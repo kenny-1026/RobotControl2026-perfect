@@ -332,6 +332,11 @@ public class RobotContainer {
                 transport.sys_runTransport());
         intakeArm.setDefaultCommand(
                 intakeArm.sys_manualMove(() -> -driverController.getRightY()));
+
+        shooterSubsystem.setDefaultCommand(
+                shooterSubsystem.sys_manualShoot(50.0));
+
+        transport.setDefaultCommand(transport.sys_reverseroller());
     }
 
     public Command getAutonomousCommand() {
