@@ -5,31 +5,13 @@
     "data": {
       "commands": [
         {
-          "type": "path",
-          "data": {
-            "pathName": "1_Start"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Auto Shoot"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "2_Go_2_mid"
-          }
-        },
-        {
-          "type": "parallel",
+          "type": "race",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "3_Eat_ball_and_shoot"
+                  "pathName": "01_start"
                 }
               },
               {
@@ -46,11 +28,23 @@
           "data": {
             "name": "Auto Shoot"
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "02_shooting"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Auto Shoot"
+          }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "old",
+  "folder": null,
   "choreoAuto": false
 }
