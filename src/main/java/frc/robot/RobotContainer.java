@@ -327,21 +327,21 @@ public class RobotContainer {
                         )
                         .finallyDo(() -> intakeArm.setManualSpeed(0))
         );
-                shooterSubsystem.setDefaultCommand(
-                                shooterSubsystem.sys_manualShoot(55.0));
+        
+        // transport.setDefaultCommand(transport.sys_reverseroller());
+        shooterSubsystem.setDefaultCommand(
+                        shooterSubsystem.sys_manualShoot(55.0));
+}
 
-                // transport.setDefaultCommand(transport.sys_reverseroller());
-        }
+        // public Command getAutonomousCommand() {
+        //         // swerve.run();
 
-        public Command getAutonomousCommand() {
-                // swerve.run();
+        //         return autoChooser.getSelected();
+        // }
 
-                return autoChooser.getSelected();
-        }
-
-        public ShuffleboardManager getShuffleboardManager() {
-                return shuffleboardManager;
-        }
+        // public ShuffleboardManager getShuffleboardManager() {
+        //         return shuffleboardManager;
+        // }
 
         public void teleopInit() {
                 // 自動使用 Limelight 校正位姿（包含航向），免去手動按 resetIMU
@@ -366,11 +366,6 @@ public class RobotContainer {
                                                                 0)));
         }
 
-        shooterSubsystem.setDefaultCommand(
-                shooterSubsystem.sys_manualShoot(50.0));
-
-        // transport.setDefaultCommand(transport.sys_reverseroller());
-    }
 
     public Command getAutonomousCommand() {
         // swerve.run();
@@ -382,28 +377,25 @@ public class RobotContainer {
         return shuffleboardManager;
     }
 
-    public void teleopInit() {
-        // 自動使用 Limelight 校正位姿（包含航向），免去手動按 resetIMU
-        swerve.resetPoseToLimelight();
+//     public void teleopInit() {
+//         // 自動使用 Limelight 校正位姿（包含航向），免去手動按 resetIMU
+//         swerve.resetPoseToLimelight();
 
-        swerve.run();
-        // 進入 Teleop 時震動手把提示（必須 schedule 才會執行）
-        CommandScheduler.getInstance().schedule(
-                Commands.sequence(
-                        Commands.runOnce(() -> driverController.setRumble(RumbleType.kBothRumble, 1)),
-                        Commands.waitSeconds(0.3),
-                        Commands.runOnce(() -> driverController.setRumble(RumbleType.kBothRumble, 0)),
-                        Commands.waitSeconds(0.1),
-                        Commands.runOnce(() -> driverController.setRumble(RumbleType.kBothRumble, 1)),
-                        Commands.waitSeconds(0.3),
-                        Commands.runOnce(() -> driverController.setRumble(RumbleType.kBothRumble, 0)))
-                        .finallyDo(() -> driverController.setRumble(RumbleType.kBothRumble, 0)));
-    }
+//         swerve.run();
+//         // 進入 Teleop 時震動手把提示（必須 schedule 才會執行）
+//         CommandScheduler.getInstance().schedule(
+//                 Commands.sequence(
+//                         Commands.runOnce(() -> driverController.setRumble(RumbleType.kBothRumble, 1)),
+//                         Commands.waitSeconds(0.3),
+//                         Commands.runOnce(() -> driverController.setRumble(RumbleType.kBothRumble, 0)),
+//                         Commands.waitSeconds(0.1),
+//                         Commands.runOnce(() -> driverController.setRumble(RumbleType.kBothRumble, 1)),
+//                         Commands.waitSeconds(0.3),
+//                         Commands.runOnce(() -> driverController.setRumble(RumbleType.kBothRumble, 0)))
+//                         .finallyDo(() -> driverController.setRumble(RumbleType.kBothRumble, 0)));
+//     }
 
     public void disabledInit() {
         swerve.disabledInit();
     }
-        public void disabledInit() {
-                swerve.disabledInit();
-        }
 }
