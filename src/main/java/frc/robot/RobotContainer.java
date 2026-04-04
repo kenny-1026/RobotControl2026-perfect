@@ -279,7 +279,7 @@ public class RobotContainer {
                         Commands.sequence(
                                 // 持續給 1.0 的速度，維持 0.4 秒
                                 intakeArm.run(() -> intakeArm.setManualSpeed(-0.5))
-                                        .withTimeout(0.2),
+                                        .withTimeout(0.5),
                                 
                                 // 持續給 0.0 的速度，維持 0.4 秒
                                 intakeArm.run(() -> intakeArm.setManualSpeed(0.0))
@@ -336,7 +336,7 @@ public class RobotContainer {
         shooterSubsystem.setDefaultCommand(
                 shooterSubsystem.sys_manualShoot(50.0));
 
-        transport.setDefaultCommand(transport.sys_reverseroller());
+        // transport.setDefaultCommand(transport.sys_reverseroller());
     }
 
     public Command getAutonomousCommand() {
