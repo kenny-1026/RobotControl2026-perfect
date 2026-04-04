@@ -31,9 +31,9 @@ public final class Constants {
   public static final class LimelightConstants {
     // ── 安裝位置（機器人座標系）──
     // ⚠️ 請用捲尺實際量測後修改！
-    public static final double kForwardMeters = -0.13; // 鏡頭距機器人中心往前 (m)
-    public static final double kSideMeters = -0.225; // 鏡頭距機器人中心往左 (m)，右為負
-    public static final double kUpMeters = 0.50; // 鏡頭距地面高度 (m)
+    public static final double kForwardMeters = -0.195; // 鏡頭距機器人中心往前 (m)
+    public static final double kSideMeters = -0.23; // 鏡頭距機器人中心往左 (m)，右為正
+    public static final double kUpMeters = 0.52; // 鏡頭距地面高度 (m)
     public static final double kRollDegrees = 0.0; // 繞前後軸旋轉 (deg)
     public static final double kPitchDegrees = 21.0; // 鏡頭仰角 (deg)，向上為正
     public static final double kYawDegrees = 0.0; // 鏡頭水平旋轉 (deg)，向左為正
@@ -133,9 +133,9 @@ public final class Constants {
     // 3.5m→55, 3.5m→60, 4.0m→65, 5.0m→70
     //
     // ⚠️ 如果更換射手機構或重新測量，請用 fit_rps.py 重新擬合係數！
-    public static final double kRpsA = 1.17; // d² 係數
-    public static final double kRpsB = -1.42; // d 係數
-    public static final double kRpsC = 45.06; // 常數項
+    public static final double kRpsA = 0; // d² 係數
+    public static final double kRpsB = 0; // d 係數
+    public static final double kRpsC = 62.0; // 常數項
 
     // 安全限制：超出測量範圍時 clamp 到邊界值
     public static final double kRpsMinDistance = 1.0; // 最近測量距離 (m)
@@ -144,7 +144,7 @@ public final class Constants {
     public static final double kRpsMax = 75.0; // 最高 RPS（對應最遠距離）
 
     // 射手速度容許誤差 (RPS)
-    public static final double kShooterToleranceRps = 5.0;
+    public static final double kShooterToleranceRps = 2.0;
 
     // 中立區回傳球固定射手 RPS
     // 因為距離遠且不需要精準進 Hub，用固定高速射回即可
@@ -180,8 +180,8 @@ public final class Constants {
 
     // ── PID 初始值 (Slot 0, VelocityVoltage) ──
     // ⚠ 透過 Shuffleboard TunableNumber 可即時調參，這裡是開機預設值
-    public static final double kDefaultKV = 0.13;
-    public static final double kDefaultKP = 0.65;// .6
+    public static final double kDefaultKV = 0.116; // 0.13 卡的時候
+    public static final double kDefaultKP = 0.55;// .6
     public static final double kDefaultKI = 0.0;
     public static final double kDefaultKD = 0.0;
     public static final double kDefaultKS = 0.0;
@@ -200,8 +200,8 @@ public final class Constants {
     public static final int kTransportMotorID = 30;
 
     // ── 速度目標 (RPS) ──
-    public static final double kTransportRps = -30.0; // 輸送帶正常速度
-    public static final double kUpToShootRps = -65.0; // 上膛推球速度
+    public static final double kTransportRps = 35.0; // 輸送帶正常速度
+    public static final double kUpToShootRps = 65.0; // 上膛推球速度
     public static final double kSlowTransportRps = 20.0; // 慢速輸送帶 (Intake 時)
 
     // ── PID 初始值 (Slot 0, VelocityVoltage) ──
@@ -324,7 +324,7 @@ public final class Constants {
     public static final int kRightRearCANCoderID = 14;
 
     // Rotor encoder & motor inversion
-    public static final boolean kRotorEncoderDirection = true;
+    public static final boolean kRotorEncoderDirection = false;
 
     public static final boolean kLeftFrontRotorInverted = true;
     public static final boolean kRightFrontRotorInverted = true;
@@ -337,9 +337,9 @@ public final class Constants {
     public static final boolean kRightRearThrottleInverted = false;
 
     // Distance between centers of right and left wheels on robot
-    public static final double kTrackWidth = 0.62865000;
+    public static final double kTrackWidth = 0.5340;
     // Distance between front and back wheels on robot
-    public static final double kWheelBase = 0.62865000;
+    public static final double kWheelBase = 0.5340;
 
     // Swerve kinematics (order: left front, right front, left rear, right rear)
     // Swerve kinematics（順序：左前，右前，左後，右後）
@@ -422,13 +422,13 @@ public final class Constants {
     public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI / 10;
     public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI / 5;
 
-    public static final double kTranslationController_kP = 1.5;
-    public static final double kTranslationController_kI = 0.003;
-    public static final double kTranslationController_kD = 0.005;
+    public static final double kTranslationController_kP = 3.0;
+    public static final double kTranslationController_kI = 0.000;
+    public static final double kTranslationController_kD = 0.000;
 
-    public static final double kRotationController_kP = 0.2;
-    public static final double kRotationController_kI = 0.006;
-    public static final double kRotationController_kD = 0.001;
+    public static final double kRotationController_kP = 1.8;
+    public static final double kRotationController_kI = 0.000;
+    public static final double kRotationController_kD = 0.000;
 
     // Constraint for the motion profiled robot angle controller
     public static final TrapezoidProfile.Constraints kThetaControllerConstraints = new TrapezoidProfile.Constraints(

@@ -111,12 +111,10 @@ public class IntakeRollerSubsystem extends SubsystemBase {
         // 4. 套用設定給 Leader
         leaderMotor.getConfigurator().apply(config);
 
-        // 5. Follower 設定
+        // 5. Follower 設定：只需要 NeutralMode + CurrentLimits，不需要 PID
+        //    Follower 模式下馬達直接複製 Leader 的輸出電壓，不會跑自己的閉環 PID，
+        //    因此套用 PID 參數是多餘的。反轉邏輯統一由 Follower(..., Opposed) 處理。
         TalonFXConfiguration followerConfig = new TalonFXConfiguration();
-        followerConfig.Slot0.kV = tunableKV.get();
-        followerConfig.Slot0.kP = tunableKP.get();
-        followerConfig.Slot0.kI = tunableKI.get();
-        followerConfig.Slot0.kD = tunableKD.get();
         followerConfig.CurrentLimits.StatorCurrentLimitEnable = true;
         followerConfig.CurrentLimits.StatorCurrentLimit = IntakeRollerConstants.kStatorCurrentLimit;
         followerConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
@@ -162,17 +160,39 @@ public class IntakeRollerSubsystem extends SubsystemBase {
     }
 
     /**
-     * Intake 吸球 Command — 按住時以目標轉速吸球，放開停止
-     * 使用 VelocityVoltage 閉環控制，遇到阻力會自動加大電壓維持轉速
+     * Intake 吸球 Command — 按住時以目標轉速吸球，同時讓 up_to_shoot 反轉擋球防止球衝進射手
+     * 放開後 IntakeRoller 停止，transport/up_to_shoot 同時停止
+     * <p>
+     * 同時 require IntakeRollerSubsystem 和 TransportSubsystem，
+     * 確保和 AutoAimAndShoot（require transport）自動互斥不會打架。
+     *
+     * @param transport TransportSubsystem，用於同步控制 up_to_shoot 反轉
      */
-    public Command sys_intakeWithTrigger() {
-        return this.runEnd(
+    public Command sys_intakeWithTrigger(TransportSubsystem transport) {
+        var cmd = this.runEnd(
             () -> {
                 setVelocity(IntakeRollerConstants.kIntakeTargetRps);
+                transport.runIntakeMode(); // transport 正轉 + up_to_shoot 反轉擋球
             },
             () -> {
                 stop();
+                transport.stopTransport();
             }
+        ).withName("IntakeWithBlock");
+        // 加入 transport requirement 確保與 AutoAimAndShoot(require transport) 自動互斥
+        cmd.addRequirements(transport);
+        return cmd;
+    }
+
+    /**
+     * Intake 吸球 Command (無 transport 版本，向後相容)
+     * @deprecated 建議改用 sys_intakeWithTrigger(TransportSubsystem) 避免球衝進射手
+     */
+    @Deprecated
+    public Command sys_intakeWithTrigger() {
+        return this.runEnd(
+            () -> setVelocity(IntakeRollerConstants.kIntakeTargetRps),
+            () -> stop()
         );
     }
 

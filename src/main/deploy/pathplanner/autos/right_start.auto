@@ -5,7 +5,7 @@
     "data": {
       "commands": [
         {
-          "type": "race",
+          "type": "parallel",
           "data": {
             "commands": [
               {
@@ -26,19 +26,26 @@
         {
           "type": "named",
           "data": {
-            "name": "Auto Shoot"
+            "name": "UpToShoot 4.5s"
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "02_shooting"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Auto Shoot"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "02_shooting"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Auto Intake"
+                }
+              }
+            ]
           }
         }
       ]
