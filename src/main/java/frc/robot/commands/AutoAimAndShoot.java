@@ -71,7 +71,7 @@ public class AutoAimAndShoot extends Command {
             tunableRotKP = new TunableNumber(tab, "Rotation kP", AutoAimConstants.kRotation_kP);
             tunableRotKI = new TunableNumber(tab, "Rotation kI", AutoAimConstants.kRotation_kI);
             tunableRotKD = new TunableNumber(tab, "Rotation kD", AutoAimConstants.kRotation_kD);
-
+            
             distanceEntry    = tab.add("Distance", 0).withWidget(BuiltInWidgets.kTextView).withSize(2, 1).withPosition(0, 2).getEntry();
             targetAngleEntry = tab.add("Target Angle", 0).withWidget(BuiltInWidgets.kTextView).withSize(2, 1).withPosition(2, 2).getEntry();
             currentAngleEntry= tab.add("Current Angle", 0).withWidget(BuiltInWidgets.kTextView).withSize(2, 1).withPosition(4, 2).getEntry();

@@ -200,8 +200,8 @@ public final class Constants {
     public static final int kTransportMotorID = 30;
 
     // ── 速度目標 (RPS) ──
-    public static final double kTransportRps = -30.0; // 輸送帶正常速度
-    public static final double kUpToShootRps = -65.0; // 上膛推球速度
+    public static final double kTransportRps = 35.0; // 輸送帶正常速度
+    public static final double kUpToShootRps = 65.0; // 上膛推球速度
     public static final double kSlowTransportRps = 20.0; // 慢速輸送帶 (Intake 時)
 
     // ── PID 初始值 (Slot 0, VelocityVoltage) ──
@@ -337,9 +337,9 @@ public final class Constants {
     public static final boolean kRightRearThrottleInverted = false;
 
     // Distance between centers of right and left wheels on robot
-    public static final double kTrackWidth = 0.62865000;
+    public static final double kTrackWidth = 0.5340;
     // Distance between front and back wheels on robot
-    public static final double kWheelBase = 0.62865000;
+    public static final double kWheelBase = 0.5340;
 
     // Swerve kinematics (order: left front, right front, left rear, right rear)
     // Swerve kinematics（順序：左前，右前，左後，右後）
@@ -422,13 +422,13 @@ public final class Constants {
     public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI / 10;
     public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI / 5;
 
-    public static final double kTranslationController_kP = 1.5;
-    public static final double kTranslationController_kI = 0.003;
-    public static final double kTranslationController_kD = 0.005;
+    public static final double kTranslationController_kP = 3.0;
+    public static final double kTranslationController_kI = 0.000;
+    public static final double kTranslationController_kD = 0.000;
 
-    public static final double kRotationController_kP = 0.2;
-    public static final double kRotationController_kI = 0.006;
-    public static final double kRotationController_kD = 0.001;
+    public static final double kRotationController_kP = 1.8;
+    public static final double kRotationController_kI = 0.000;
+    public static final double kRotationController_kD = 0.000;
 
     // Constraint for the motion profiled robot angle controller
     public static final TrapezoidProfile.Constraints kThetaControllerConstraints = new TrapezoidProfile.Constraints(
