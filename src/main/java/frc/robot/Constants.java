@@ -222,7 +222,7 @@ public final class Constants {
     public static final int kFollowerMotorID = 35;
 
     // ── 速度目標 (RPS) ──
-    public static final double kIntakeTargetRps = 45.0; // 75 -> 35
+    public static final double kIntakeTargetRps = 70.0; // 75 -> 35
     public static final double kOuttakeTargetRps = -70.0;
 
     // ── PID 初始值 (Slot 0, VelocityVoltage) ──
