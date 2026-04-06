@@ -13,12 +13,15 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Constants;
 import frc.robot.util.ShuffleboardManager;
+import edu.wpi.first.wpilibj.DriverStation;
 
 /**
  * The methods in this class are called automatically corresponding to each mode, as described in
  * the TimedRobot documentation. If you change the name of this class or the package after creating
  * this project, you must also update the Main.java file in the project.
  */
+
+
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
@@ -30,6 +33,22 @@ public class Robot extends TimedRobot {
   private double maxLoopTime = 0;
   private int telemetryCounter = 0;
 
+
+   // 在 Robot.java 或相關的 Periodic 函式中
+public void updateGameData() {
+    // 獲取剩餘比賽時間 (單位：秒)
+    double matchTime = edu.wpi.first.wpilibj.DriverStation.getMatchTime();
+    
+    // 獲取 FMS 連線狀態或機器人是否處於啟動狀態
+    // 注意：2026 規則中，"Active" 可能指比賽進行中
+    boolean isActive = edu.wpi.first.wpilibj.DriverStation.isDSAttached() 
+                       && !edu.wpi.first.wpilibj.DriverStation.isDisabled();
+
+    // 將數值推送到 NetworkTables (Elastic 會自動掃描這些路徑)
+    // 建議放在一個名為 "GameData" 的目錄下
+    SmartDashboard.putNumber("GameData/MatchTime", matchTime);
+    SmartDashboard.putBoolean("GameData/IsActive", isActive);
+}
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -81,6 +100,7 @@ public class Robot extends TimedRobot {
       SmartDashboard.putNumber("Loop/CurrentMs", loopTime);
       SmartDashboard.putNumber("Loop/MaxMs", maxLoopTime);
       SmartDashboard.putBoolean("Loop/Overrun", overrun);
+      updateGameData();
     }
   }
 
