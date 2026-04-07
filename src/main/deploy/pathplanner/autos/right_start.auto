@@ -19,6 +19,12 @@
                 "data": {
                   "name": "Auto Intake"
                 }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutoDropAndIntake"
+                }
               }
             ]
           }

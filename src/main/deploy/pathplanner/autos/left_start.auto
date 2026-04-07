@@ -5,9 +5,22 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "left_01"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "left_01"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutoDropAndIntake"
+                }
+              }
+            ]
           }
         },
         {
