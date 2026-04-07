@@ -135,8 +135,8 @@ public class RobotContainer {
 
                 NamedCommands.registerCommand("AutoDropAndIntake",
                                 // 放下手臂 0.4 秒
-                                intakeArm.run(() -> intakeArm.setManualSpeed(0.2))
-                                                .withTimeout(0.4)
+                                intakeArm.run(() -> intakeArm.setManualSpeed(0.35))
+                                                .withTimeout(0.8)
                                                 .finallyDo(() -> intakeArm.setManualSpeed(0.0)));
 
                 // "UpToShoot 2s"：up_to_shoot + transport 正轉推球 2 秒後自動結束
@@ -144,16 +144,7 @@ public class RobotContainer {
                 // 建議放在路徑結束後（sequential），讓機器人停下來射擊
                 // ⚠ 如需不同秒數，複製並修改秒數後再加一行 registerCommand
                 NamedCommands.registerCommand("UpToShoot 4.5s",
-                                Commands.sequence(
-                                                // 1. 先反轉 transport 跟 roller 1 秒 (把球微退)
-                                                // (因為 sys_reverseTransport 裡面有寫 this::stop，所以結束時會自動停)
-                                                transport.sys_reverseTransport().withTimeout(1.0),
-
-                                                // 2. 接著正常正轉運作 4.5 秒 (推球進去射擊)
-                                                // ⚠️ 改用你寫好的 sys_runTransport()，它裡面是用 runEnd 寫的，時間到一定會自動觸發 stop()！
-                                                transport.sys_runTransport().withTimeout(4.5)
-
-                                ).withTimeout(5.5));
+                                transport.sys_runTransport().withTimeout(4.5));
 
                 try {
                         RobotConfig config = RobotConfig.fromGUISettings();
