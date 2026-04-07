@@ -99,7 +99,7 @@ public class RobotContainer {
         private Command createAutoIntakeCommand() {
                 return Commands.parallel(
                                 intakeRoller.sys_intakeWithTrigger(),
-                                transport.sys_slowRunTransport()).withTimeout(6.0);
+                                transport.sys_slowRunTransport()).withTimeout(3.0);
         }
 
         private Command createShootCommand() {

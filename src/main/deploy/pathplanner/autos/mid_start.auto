@@ -30,12 +30,6 @@
           }
         },
         {
-          "type": "path",
-          "data": {
-            "pathName": "mid_02"
-          }
-        },
-        {
           "type": "parallel",
           "data": {
             "commands": [
@@ -52,6 +46,37 @@
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "UpToShoot 4.5s"
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "mid_04"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Auto Intake"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "mid_05"
           }
         },
         {
