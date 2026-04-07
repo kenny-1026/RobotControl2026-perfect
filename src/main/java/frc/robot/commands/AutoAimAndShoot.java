@@ -182,6 +182,7 @@ public class AutoAimAndShoot extends Command {
             targetRps = interpolateRps(distanceToTarget);
         } else {
             targetRps = AutoAimConstants.kMidFieldReturnRps;
+
         }
 
         // 9. 設定射手速度（按下按鈕就開始轉，不等對齊）
@@ -202,7 +203,7 @@ public class AutoAimAndShoot extends Command {
             isAligned = angleErrorDeg <= AutoAimConstants.kRotationToleranceDeg;
         }
         
-        boolean isAtSpeed = m_shooter.isAtSpeed(targetRps, AutoAimConstants.kShooterToleranceRps);
+        boolean isAtSpeed = m_shooter.isAtSpeed(targetRps, m_isInOwnZone ? AutoAimConstants.kShooterToleranceRps : 6.0);
 
         // 11~12. 角度對齊 + 射手達速 → 同時啟動 transport + up_to_shoot 送球
         //        兩顆馬達同時啟動、同時停止，確保送球一致性

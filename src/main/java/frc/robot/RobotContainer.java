@@ -279,11 +279,11 @@ public class RobotContainer {
                         Commands.sequence(
                                 // 持續給 1.0 的速度，維持 0.4 秒
                                 intakeArm.run(() -> intakeArm.setManualSpeed(-0.5))
-                                        .withTimeout(0.5),
+                                        .withTimeout(0.3),
                                 
                                 // 持續給 0.0 的速度，維持 0.4 秒
-                                intakeArm.run(() -> intakeArm.setManualSpeed(0.0))
-                                        .withTimeout(0.5)
+                                intakeArm.run(() -> intakeArm.setManualSpeed(0.4))
+                                        .withTimeout(0.4)
                         ).repeatedly() // 不斷循環
                         )
                         .finallyDo(() -> intakeArm.setManualSpeed(0))
@@ -334,7 +334,7 @@ public class RobotContainer {
                 intakeArm.sys_manualMove(() -> -driverController.getRightY()));
 
         shooterSubsystem.setDefaultCommand(
-                shooterSubsystem.sys_manualShoot(50.0));
+                shooterSubsystem.sys_manualShoot(52.0)); // mid 52
 
         // transport.setDefaultCommand(transport.sys_reverseroller());
     }
