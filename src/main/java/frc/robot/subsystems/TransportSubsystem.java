@@ -120,7 +120,7 @@ public class TransportSubsystem extends SubsystemBase {
     public Command sys_slowRunTransport() {
         return this.runEnd(
             () -> {
-                setSpeed(TransportConstants.kSlowTransportRps, TransportConstants.kSlowTransportRps);
+                setSpeed(-TransportConstants.kSlowTransportRps, 0);
             }, 
             () -> {
                 stop();
