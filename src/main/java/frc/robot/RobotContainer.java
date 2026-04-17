@@ -13,6 +13,7 @@ import frc.robot.subsystems.IntakeArmSubsystem;
 import frc.robot.subsystems.IntakeRollerSubsystem;
 import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.TransportSubsystem;
+import frc.robot.subsystems.GateSubsystem;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import static edu.wpi.first.units.Units.*;
@@ -69,7 +70,7 @@ public class RobotContainer {
                         shuffleboardManager.getIntakeRollerTab());
         private final TransportSubsystem transport = new TransportSubsystem();
         private final IntakeArmSubsystem intakeArm = new IntakeArmSubsystem();
-
+        private final GateSubsystem gate = new GateSubsystem();
         private Command autoCommand;
 
         // ── 距離自適應輔助方法 ──
@@ -283,6 +284,14 @@ public class RobotContainer {
                 // shuffleboardManager.getAutoAimTab()
                 // )
                 // );
+
+
+
+                
+                // Gate：按住Y鍵控制閘門開關
+                driverController.y().whileTrue(gate.sys_runGate());
+                 
+
 
                 driverController.rightTrigger(0.1).whileTrue(
                                 new AutoAimAndShoot(
