@@ -192,23 +192,24 @@ public final class Constants {
   }
 
 
-  // ===== 閘門 (Gate) 常數 =====
-  public static final class GateConstants {
-    public static final int kGateMotorID = 50; 
-    
-    // ✨ 新增：這顆新馬達專屬的轉速和力量設定 (數值你可以後續再調)
-    public static final double kGateSpeedRps = 1.0; 
-    
-    // ✨ 新增：捲線器的圈數限制
-    public static final double kGateMaxTurns = 5.0; // 假設最多拉 5 圈 (請依實際機構調整)
-    public static final double kGateMinTurns = 0.0; // 放到底就是 0 圈
+  // ===== 儲球機構 (Storage) 常數 =====
+  public static final class StorageConstants {
+    public static final int kLeaderID = 51;   
+    public static final int kFollowerID = 52;
 
-    // 專屬的 PID 參數 (這裡先放預設的安全值，之後有需要再改)
-    public static final double kGateKp = 0.12;
-    public static final double kGateKi = 0.2;
-    public static final double kGateKd = 0.0;
-    public static final double kGateKv = 0.0;
+    public static final double kStorageSpeedRps = 10.0; 
+    
+    // 圈數限制
+    public static final double kMaxTurns = 10.0;// 10 圈是安全的上限，根據實際機構調整 
+    public static final double kMinTurns = 0.0;// 0 圈是安全的下限，根據實際機構調整
+
+    // PID 參數
+    public static final double kKv = 0.12;
+    public static final double kKp = 0.11;
+    public static final double kKi = 0.0;
+    public static final double kKd = 0.0;
   }
+  
 
   // ===== 輸送帶 (Transport) 常數 =====
   public static final class TransportConstants {
