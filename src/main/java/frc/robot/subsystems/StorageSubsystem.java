@@ -25,7 +25,8 @@ public class StorageSubsystem extends SubsystemBase {
         
         TalonFXConfiguration config = new TalonFXConfiguration();
         config.MotorOutput.NeutralMode = NeutralModeValue.Brake; // Storage 建議用煞車
-        config.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+        
+        config.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
         
         config.Slot0.kV = StorageConstants.kKv;
         config.Slot0.kP = StorageConstants.kKp;
@@ -41,8 +42,8 @@ public class StorageSubsystem extends SubsystemBase {
         followerMotor.getConfigurator().apply(config);
 
         // 兩顆馬達皆歸零
-        leaderMotor.setPosition(0.0);
-        followerMotor.setPosition(0.0);
+        // leaderMotor.setPosition(0.0);
+        // followerMotor.setPosition(0.0);
 
         // =========================================
         // 綁定跟隨：使用你們成功的魔法指令

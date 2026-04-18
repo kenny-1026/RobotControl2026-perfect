@@ -175,8 +175,8 @@ public final class Constants {
   // ===== 射手 (Shooter) 常數 =====
   public static final class ShooterConstants {
     // ── 硬體 CAN ID ──
-    public static final int kLeaderMotorID = 22;
-    public static final int kFollowerMotorID = 21;
+    public static final int kLeaderMotorID = 22;//需註解馬達
+    public static final int kFollowerMotorID = 21;//需註解馬達
 
     // ── PID 初始值 (Slot 0, VelocityVoltage) ──
     // ⚠ 透過 Shuffleboard TunableNumber 可即時調參，這裡是開機預設值
@@ -197,10 +197,10 @@ public final class Constants {
     public static final int kLeaderID = 51;   
     public static final int kFollowerID = 52;
 
-    public static final double kStorageSpeedRps = 10.0; 
+    public static final double kStorageSpeedRps = 50.0; 
     
     // 圈數限制
-    public static final double kMaxTurns = 10.0;// 10 圈是安全的上限，根據實際機構調整 
+    public static final double kMaxTurns = 45.0;// 45圈是安全的上限，根據實際機構調整 
     public static final double kMinTurns = 0.0;// 0 圈是安全的下限，根據實際機構調整
 
     // PID 參數
@@ -208,17 +208,20 @@ public final class Constants {
     public static final double kKp = 0.11;
     public static final double kKi = 0.0;
     public static final double kKd = 0.0;
+
+    public static final double kStatorCurrentLimit = 0.03;
+    public static final double kSupplyCurrentLimit = 0.03;
   }
   
 
   // ===== 輸送帶 (Transport) 常數 =====
   public static final class TransportConstants {
     // ── 硬體 CAN ID ──
-    public static final int kUpToShootMotorID = 26;
+    public static final int kUpToShootMotorID = 26;//需註解馬達
     public static final int kTransportMotorID = 30;
 
     // ── 速度目標 (RPS) ──
-    public static final double kTransportRps = -30.0; // 輸送帶正常速度
+    public static final double kTransportRps = -70.0; // 輸送帶正常速度
     public static final double kUpToShootRps = -65.0; // 上膛推球速度
     public static final double kSlowTransportRps = 20.0; // 慢速輸送帶 (Intake 時)
 

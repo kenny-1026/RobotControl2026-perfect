@@ -275,8 +275,8 @@ public class RobotContainer {
 
                 // Drive2Tag：按住 A 鍵自動對位 AprilTag
                 // 額外 require shooter + transport → 若 AutoAimAndShoot 正在運行會被自動取消
-                driverController.a().whileTrue(
-                                transport.sys_reverseTransport());
+                // driverController.a().whileTrue(
+                                // transport.sys_reverseTransport());
 
                 // AutoAimAndShoot：按住右板機自動瞄準 + 依距離調整射手速度 + 達速對準後自動發射
 
@@ -290,6 +290,7 @@ public class RobotContainer {
 
 
                 // Gate：按住Y鍵控制閘門開關
+                driverController.a().whileTrue(storage.sys_reverseStorage());
                 driverController.y().whileTrue(storage.sys_runStorage());
                  
 
