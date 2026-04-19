@@ -64,7 +64,8 @@ public class RobotContainer {
         // ═══════════════ Shuffleboard ═══════════════
         private final ShuffleboardManager shuffleboardManager = new ShuffleboardManager();
 
-        private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem(shuffleboardManager.getShooterTab());
+        // private final ShooterSubsystem shooterSubsystem = new
+        // ShooterSubsystem(shuffleboardManager.getShooterTab());
         // private final IntakeArmSubsystem intakeArm = new
         // IntakeArmSubsystem(shuffleboardManager.getIntakeArmTab());
         private final IntakeRollerSubsystem intakeRoller = new IntakeRollerSubsystem(
@@ -76,27 +77,13 @@ public class RobotContainer {
 
         // ── 距離自適應輔助方法 ──
         // 根據機器人目前位置計算到 Hub 的距離，查表取得目標 RPS
-        private double getAdaptiveRps() {
-                var robotPos = swerve.getPose().getTranslation();
-                Translation2d hubPos = AutoAimConstants.getHubPosition(swerve.isAllianceRed());
-                double distance = hubPos.minus(robotPos).getNorm();
-                return ShooterSubsystem.interpolateRps(distance);
-        }
-
-        // ── 工廠方法：自適應自主射擊 ──
-        // PathPlanner Auto 用：即時計算距離 → 動態調整 RPS → 達速後送球
-        private Command createAutoShootCommand() {
-                return Commands.parallel(
-                                // 持續依距離設定射手速度
-                                shooterSubsystem.run(() -> shooterSubsystem.setTargetVelocity(getAdaptiveRps()))
-                                                .finallyDo(() -> shooterSubsystem.stopShooter()),
-                                Commands.sequence(
-                                                Commands.waitUntil(() -> shooterSubsystem.isAtSpeed(getAdaptiveRps(),
-                                                                AutoAimConstants.kShooterToleranceRps))
-                                                                .withTimeout(2.0),
-                                                transport.sys_runTransport().withTimeout(4.0)))
-                                .withTimeout(4.0);
-        }
+        // private double getAdaptiveRps() {
+        // var robotPos = swerve.getPose().getTranslation();
+        // Translation2d hubPos =
+        // AutoAimConstants.getHubPosition(swerve.isAllianceRed());
+        // double distance = hubPos.minus(robotPos).getNorm();
+        // return ShooterSubsystem.interpolateRps(distance);
+        // }
 
         private Command createAutoIntakeCommand() {
                 return Commands.parallel(
@@ -104,29 +91,11 @@ public class RobotContainer {
                                 transport.sys_slowRunTransport()).withTimeout(3.0);
         }
 
-        private Command createShootCommand() {
-                return Commands.sequence(
-                                Commands.waitUntil(
-                                                () -> shooterSubsystem.isAtSpeed(getAdaptiveRps(),
-                                                                AutoAimConstants.kShooterToleranceRps)),
-                                transport.sys_runTransport());
-        }
-
         public RobotContainer() {
                 SignalLogger.enableAutoLogging(false);
 
                 // ═══════════════ Shuffleboard 初始化 ═══════════════
                 swerve.setupShuffleboardTab(shuffleboardManager.getSwerveTab());
-
-                NamedCommands.registerCommand("transport wait shoot", createShootCommand());
-                // "shoot work"：僅啟動射手（依距離自適應 RPS），不含送球
-                NamedCommands.registerCommand("shoot work",
-                                shooterSubsystem.run(() -> shooterSubsystem.setTargetVelocity(getAdaptiveRps()))
-                                                .finallyDo(() -> shooterSubsystem.stopShooter()));
-
-                NamedCommands.registerCommand("Auto Shoot", createAutoShootCommand());
-                // "Far Auto Shoot" 不再需要，統一用自適應 "Auto Shoot"
-                NamedCommands.registerCommand("Far Auto Shoot", createAutoShootCommand());
                 NamedCommands.registerCommand("Auto Intake", createAutoIntakeCommand());
 
                 NamedCommands.registerCommand("Start Intake",
@@ -145,8 +114,8 @@ public class RobotContainer {
                 // 射手應已在比賽開始時啟動到待機轉速（sys_idle DefaultCommand）
                 // 建議放在路徑結束後（sequential），讓機器人停下來射擊
                 // ⚠ 如需不同秒數，複製並修改秒數後再加一行 registerCommand
-                NamedCommands.registerCommand("UpToShoot 4.5s",
-                                transport.sys_runTransport().withTimeout(4.5));
+                // NamedCommands.registerCommand("UpToShoot 4.5s",
+                // transport.sys_runTransport().withTimeout(4.5));
 
                 try {
                         RobotConfig config = RobotConfig.fromGUISettings();
@@ -161,7 +130,7 @@ public class RobotContainer {
 
                                         new PPHolonomicDriveController(
                                                         new PIDConstants(3.0, 0.0, 0.0), // Translation PID
-                                                        new PIDConstants(1.8, 0.0, 0.0) // Rotation PID
+                                                        new PIDConstants(2.2, 0.0, 0.0) // Rotation PID
                                         ),
 
                                         config, // 機器人配置
@@ -169,68 +138,22 @@ public class RobotContainer {
                                         swerve::isAllianceRed, // 決定是否翻轉路徑
                                         swerve // Subsystem
                         );
-                        // com.pathplanner.lib.util.PathPlannerLogging.setLogEstimatedPoseCallback(null);
 
                 } catch (Exception e) {
                         e.printStackTrace();
                 }
 
+                configureBindings();
                 autoChooser = AutoBuilder.buildAutoChooser();
                 shuffleboardManager.setupMainTab(swerve.getField2d(), autoChooser);
-
-                // autoCommand = AutoBuilder.buildAuto("Simple Left Auto");
-
-                configureBindings();
+                
                 swerve.setDefaultCommand(manualDriveCommand);
-                // shooterSubsystem.setDefaultCommand((shooterSubsystem.sys_idle()));
                 driverController.button(8).onTrue(Commands.runOnce(swerve::resetIMU)); // menu button
 
                 driverController.rightStick().onTrue(Commands.either(
                                 Commands.runOnce(() -> manualDriveCommand.setIsFieldOriented(false)),
                                 Commands.runOnce(() -> manualDriveCommand.setIsFieldOriented(true)),
                                 manualDriveCommand::getIsFieldOriented));
-
-                // CommandScheduler.getInstance().schedule(
-                // Commands.run(() -> {
-                // // printCounter++;
-                // // if (printCounter >= 10) { // 每 10 個週期 (約 0.2秒) 才執行一次
-                // // // SmartDashboard.putString("Position", swerve.getPose().toString());
-                // // // putLimeLight();
-                // // // 這裡也可以呼叫 swerve.updateSmartDashboard();
-                // // printCounter = 0; // 重置計數器
-                // // }
-                // // SmartDashboard.putString("Position", swerve.getPose().toString());
-                // // putLimeLight();
-                // // SmartDashboard.putNumber("Match Time", timer.getMatchTime());
-                // // if (shooterSubsystem.isAtSpeed()) { // 假設目標是 80
-                // // // 速度到了 -> 輕微震動左手把
-                // // driverController.getHID().setRumble(RumbleType.kLeftRumble, 0.1);
-                // // } else {
-                // // // 速度沒到 -> 關閉震動
-                // // driverController.getHID().setRumble(RumbleType.kLeftRumble, 0);
-                // // }
-                // }).ignoringDisable(true)
-
-                // );
-        }
-
-        public void putLimeLight() {
-                LimelightHelpers.PoseEstimate mt2;
-                // if (swerve.isAllianceRed()) {
-                // // 如果是紅方，拿以紅方為基準的 MegaTag2 座標
-                // mt2 = LimelightHelpers.getBotPoseEstimate_wpiRed(Constants.kLimelightName);
-                // } else {
-                // 預設拿藍方的
-                // mt2 = LimelightHelpers.getBotPoseEstimate_wpiBlue(Constants.kLimelightName);
-                // // }
-                // if (mt2 != null) {
-                // // SmartDashboard.putNumber("TagCount", mt2.tagCount);
-                // double[] fiducialIds = new double[mt2.rawFiducials.length];
-                // for (int i = 0; i < mt2.rawFiducials.length; i++) {
-                // fiducialIds[i] = mt2.rawFiducials[i].id;
-                // }
-                // // SmartDashboard.putNumberArray("Fiducials", fiducialIds);
-                // }
         }
 
         private void configureBindings() {
@@ -254,24 +177,24 @@ public class RobotContainer {
                 // → 解法：Drive2Tag 綁定時額外 require shooter+transport，讓 scheduler 自動互斥
 
                 // 手動射擊：按住左緩衝鍵 (Left Bumper) 時直接設定射手速度為 45 RPS，達速後啟動 Transport 送球；放開時強制停止射手
-                driverController.leftBumper().whileTrue(
-                                Commands.parallel(
-                                                // 1. 讓 Shooter 馬達直接設定為 45 RPS (使用你寫好的 setTargetVelocity 方法)
-                                                Commands.run(() -> shooterSubsystem.setTargetVelocity(60.0),
-                                                                shooterSubsystem),
+                // driverController.leftBumper().whileTrue(
+                // Commands.parallel(
+                // // 1. 讓 Shooter 馬達直接設定為 45 RPS (使用你寫好的 setTargetVelocity 方法)
+                // Commands.run(() -> shooterSubsystem.setTargetVelocity(60.0),
+                // shooterSubsystem),
 
-                                                // 2. 監控轉速，達速後啟動 Transport 馬達送球
-                                                Commands.sequence(
-                                                                // 優雅地使用你的 isAtSpeed 方法：等待轉速達到 45 (容許誤差 2.0 RPS)
-                                                                Commands.waitUntil(() -> shooterSubsystem
-                                                                                .isAtSpeed(60.0, 2.0)),
-                                                                // 轉速到了，直接呼叫你寫好的 Transport Command 送球！
-                                                                transport.sys_runTransport()))
-                                                .finallyDo(() -> {
-                                                        // 3. 安全防呆：只要放開左緩衝鍵，強制停止射手
-                                                        shooterSubsystem.stopShooter();
-                                                        // (註：transport.sys_runTransport() 放開時會自己停，所以這裡不用多寫)
-                                                }));
+                // // 2. 監控轉速，達速後啟動 Transport 馬達送球
+                // Commands.sequence(
+                // // 優雅地使用你的 isAtSpeed 方法：等待轉速達到 45 (容許誤差 2.0 RPS)
+                // Commands.waitUntil(() -> shooterSubsystem
+                // .isAtSpeed(60.0, 2.0)),
+                // // 轉速到了，直接呼叫你寫好的 Transport Command 送球！
+                // transport.sys_runTransport()))
+                // .finallyDo(() -> {
+                // // 3. 安全防呆：只要放開左緩衝鍵，強制停止射手
+                // shooterSubsystem.stopShooter();
+                // // (註：transport.sys_runTransport() 放開時會自己停，所以這裡不用多寫)
+                // }));
 
                 // Drive2Tag：按住 A 鍵自動對位 AprilTag
                 // 額外 require shooter + transport → 若 AutoAimAndShoot 正在運行會被自動取消
@@ -360,10 +283,7 @@ public class RobotContainer {
                 driverController.leftTrigger(0.1).whileTrue(
                                 Commands.parallel(
                                                 intakeRoller.sys_intakeWithTrigger(),
-                                                transport.sys_runTransport())
-                // intakeRoller.sys_intakeWithTrigger(() ->
-                // driverController.getLeftTriggerAxis())
-                );
+                                                transport.sys_runTransport()));
 
                 // transport
                 driverController.x().whileTrue(
@@ -371,16 +291,15 @@ public class RobotContainer {
                 intakeArm.setDefaultCommand(
                                 intakeArm.sys_manualMove(() -> -driverController.getRightY()));
 
-                shooterSubsystem.setDefaultCommand(
-                                shooterSubsystem.sys_manualShoot(52.0)); // mid 52
-
                 // transport.setDefaultCommand(transport.sys_reverseroller());
         }
 
         public Command getAutonomousCommand() {
-                // swerve.run();
-
-                return autoChooser.getSelected();
+                Command selected = autoChooser.getSelected();
+                if (selected != null) {
+                        return selected;
+                }
+                return Commands.none();
         }
 
         public ShuffleboardManager getShuffleboardManager() {

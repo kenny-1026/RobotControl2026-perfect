@@ -12,7 +12,7 @@ import frc.robot.Constants.TransportConstants;
 
 public class TransportSubsystem extends SubsystemBase {
     // 宣告兩顆馬達
-    private final TalonFX up_to_shoot;
+    // private final TalonFX up_to_shoot;
     private final TalonFX transport;
 
     // 建立獨立的 VelocityVoltage 閉環控制請求物件，避免兩個馬達共用同一個參照導致互相覆蓋
@@ -20,7 +20,7 @@ public class TransportSubsystem extends SubsystemBase {
     private final VelocityVoltage transportRequest = new VelocityVoltage(0);
 
     public TransportSubsystem() {
-        up_to_shoot = new TalonFX(TransportConstants.kUpToShootMotorID); 
+        // up_to_shoot = new TalonFX(TransportConstants.kUpToShootMotorID); 
         transport = new TalonFX(TransportConstants.kTransportMotorID);
 
         // ==========================================
@@ -37,7 +37,7 @@ public class TransportSubsystem extends SubsystemBase {
         shootConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
         shootConfig.CurrentLimits.SupplyCurrentLimit = TransportConstants.kSupplyCurrentLimit;
         shootConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
-        up_to_shoot.getConfigurator().apply(shootConfig);
+        // up_to_shoot.getConfigurator().apply(shootConfig);
 
         // ==========================================
         // transport 輸送帶馬達設定
@@ -62,7 +62,7 @@ public class TransportSubsystem extends SubsystemBase {
      * @param shootRps     up_to_shoot 上膛推球目標轉速
      */
     public void setSpeed(double transportRps, double shootRps) {
-        up_to_shoot.setControl(upToShootRequest.withVelocity(shootRps));
+        // up_to_shoot.setControl(upToShootRequest.withVelocity(shootRps));
         transport.setControl(transportRequest.withVelocity(transportRps));
     }
 
@@ -77,14 +77,14 @@ public class TransportSubsystem extends SubsystemBase {
      * 只啟動 up_to_shoot 上膛推球 (閉環目標轉速)
      */
     public void setSpeed_to_shoot() {
-        up_to_shoot.setControl(upToShootRequest.withVelocity(TransportConstants.kUpToShootRps));
+        // up_to_shoot.setControl(upToShootRequest.withVelocity(TransportConstants.kUpToShootRps));
     }
 
     /**
      * 停止兩顆馬達（Coast 自然滑行，不瞬間煞車）
      */
     public void stop() {
-        up_to_shoot.stopMotor();
+        // up_to_shoot.stopMotor();
         transport.stopMotor();
     }
 
@@ -138,10 +138,10 @@ public class TransportSubsystem extends SubsystemBase {
         );
     }
 
-    public Command sys_reverseroller() {
-        return this.runEnd(
-            () -> up_to_shoot.setControl(upToShootRequest.withVelocity(-TransportConstants.kUpToShootRps)), 
-            this::stop
-        );
-    }
+    // public Command sys_reverseroller() {
+    //     return this.runEnd(
+    //         // () -> up_to_shoot.setControl(upToShootRequest.withVelocity(-TransportConstants.kUpToShootRps)), 
+    //         this::stop
+    //     );
+    // }
 }
