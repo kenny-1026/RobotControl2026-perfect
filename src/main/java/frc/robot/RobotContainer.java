@@ -276,7 +276,7 @@ public class RobotContainer {
                 // Drive2Tag：按住 A 鍵自動對位 AprilTag
                 // 額外 require shooter + transport → 若 AutoAimAndShoot 正在運行會被自動取消
                 // driverController.a().whileTrue(
-                                // transport.sys_reverseTransport());
+                // transport.sys_reverseTransport());
 
                 // AutoAimAndShoot：按住右板機自動瞄準 + 依距離調整射手速度 + 達速對準後自動發射
 
@@ -286,36 +286,44 @@ public class RobotContainer {
                 // )
                 // );
 
-
-
-
                 // Gate：按住Y鍵控制閘門開關
                 driverController.a().whileTrue(storage.sys_reverseStorage());
-                driverController.y().whileTrue(storage.sys_runStorage());
-                 
-
-
+                // driverController.y().whileTrue(storage.sys_runStorage());
+                driverController.y().onTrue(storage.sys_togglePosition());
                 driverController.rightTrigger(0.1).whileTrue(
-                                new AutoAimAndShoot(
-                                                swerve,
-                                                shooterSubsystem,
-                                                transport,
-                                                manualDriveCommand,
-                                                shuffleboardManager.getAutoAimTab())
-                                                .deadlineWith(
-                                                                Commands.sequence(
-                                                                                // 持續給 1.0 的速度，維持 0.4 秒
-                                                                                intakeArm.run(() -> intakeArm
-                                                                                                .setManualSpeed(-0.5))
-                                                                                                .withTimeout(0.3),
+                                Commands.sequence(
+                                                // 動作一：給 -0.3 的速度，維持 2.5 秒
+                                                intakeArm.run(() -> intakeArm.setManualSpeed(-0.3))
+                                                                .withTimeout(2.5),
 
-                                                                                // 持續給 0.0 的速度，維持 0.4 秒
-                                                                                intakeArm.run(() -> intakeArm
-                                                                                                .setManualSpeed(0.4))
-                                                                                                .withTimeout(0.4))
-                                                                                .repeatedly() // 不斷循環
-                                                )
-                                                .finallyDo(() -> intakeArm.setManualSpeed(0)));
+                                                // 動作二：給 0.1 的速度，維持 1.5 秒
+                                                intakeArm.run(() -> intakeArm.setManualSpeed(0.1))
+                                                                .withTimeout(1.5))
+                                                .repeatedly() // 只要按住右板機，就會不斷重複上述兩個動作
+                                                .finallyDo(() -> intakeArm.setManualSpeed(0)) // 鬆開板機時，安全停止手臂
+                );
+
+                // driverController.rightTrigger(0.1).whileTrue(
+                // new AutoAimAndShoot(
+                // swerve,
+                // shooterSubsystem,
+                // transport,
+                // manualDriveCommand,
+                // shuffleboardManager.getAutoAimTab())
+                // .deadlineWith(
+                // Commands.sequence(
+                // // 持續給 1.0 的速度，維持 0.4 秒
+                // intakeArm.run(() -> intakeArm
+                // .setManualSpeed(-0.3))
+                // .withTimeout(2.5),
+
+                // // 持續給 0.0 的速度，維持 0.4 秒
+                // intakeArm.run(() -> intakeArm
+                // .setManualSpeed(0.1))
+                // .withTimeout(1.5))
+                // .repeatedly() // 不斷循環
+                // )
+                // .finallyDo(() -> intakeArm.setManualSpeed(0)));
 
                 // shooterSubsystem.sys_manualShoot(1.0);
 
@@ -350,7 +358,9 @@ public class RobotContainer {
                 // 當左板機按壓超過 0.1 時，啟動 sys_intakeWithTrigger 指令
                 // 放開後自動停止
                 driverController.leftTrigger(0.1).whileTrue(
-                                intakeRoller.sys_intakeWithTrigger()
+                                Commands.parallel(
+                                                intakeRoller.sys_intakeWithTrigger(),
+                                                transport.sys_runTransport())
                 // intakeRoller.sys_intakeWithTrigger(() ->
                 // driverController.getLeftTriggerAxis())
                 );

@@ -31,12 +31,12 @@ public final class Constants {
   public static final class LimelightConstants {
     // ── 安裝位置（機器人座標系）──
     // ⚠️ 請用捲尺實際量測後修改！
-    public static final double kForwardMeters = -0.13; // 鏡頭距機器人中心往前 (m)
-    public static final double kSideMeters = -0.225; // 鏡頭距機器人中心往左 (m)，右為負
-    public static final double kUpMeters = 0.53; // 鏡頭距地面高度 (m)
+    public static final double kForwardMeters = -0.277; // 鏡頭距機器人中心往前 (m)
+    public static final double kSideMeters = -0.296; // 鏡頭距機器人中心往左 (m)，右為負
+    public static final double kUpMeters = 0.201; // 鏡頭距地面高度 (m)
     public static final double kRollDegrees = 0.0; // 繞前後軸旋轉 (deg)
-    public static final double kPitchDegrees = 19.0; // 鏡頭仰角 (deg)，向上為正
-    public static final double kYawDegrees = 0.0; // 鏡頭水平旋轉 (deg)，向左為正
+    public static final double kPitchDegrees = 47.0; // 鏡頭仰角 (deg)，向上為正
+    public static final double kYawDegrees = 180.0; // 鏡頭水平旋轉 (deg)，向左為正
 
     // ── 視覺融合過濾閾值 ──
     public static final double kMaxAmbiguity = 0.7; // 單 Tag ambiguity 超過此值就丟棄
@@ -205,12 +205,12 @@ public final class Constants {
 
     // PID 參數
     public static final double kKv = 0.12;
-    public static final double kKp = 0.11;
-    public static final double kKi = 0.0;
+    public static final double kKp = 0.35;
+    public static final double kKi = 0.01;
     public static final double kKd = 0.0;
 
-    public static final double kStatorCurrentLimit = 0.03;
-    public static final double kSupplyCurrentLimit = 0.03;
+    public static final double kStatorCurrentLimit = 0.1;
+    public static final double kSupplyCurrentLimit = 0.1;
   }
   
 

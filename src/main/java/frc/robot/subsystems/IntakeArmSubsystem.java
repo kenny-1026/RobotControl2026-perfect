@@ -119,7 +119,7 @@ public class IntakeArmSubsystem extends SubsystemBase {
         followerMotor.setControl(new Follower(leaderMotor.getDeviceID(), MotorAlignmentValue.Opposed));
         
         // 歸零：假設機器人啟動時，Intake 是處於「收起」的狀態 (0度)
-        leaderMotor.setPosition(0);
+        // leaderMotor.setPosition(0);
 
         // ── 快取 Status Signal 並設定 CAN 更新頻率 ──
         // position: 手臂位置控制需要，50Hz 足夠
@@ -141,7 +141,7 @@ public class IntakeArmSubsystem extends SubsystemBase {
      */
     public void setManualSpeed(double speed) {
         // 為了安全，我們可以把最大速度限制在 30% 以內，避免測試時打壞機構
-        double safeSpeed = speed * 0.30; 
+        double safeSpeed = speed * 0.15; 
         leaderMotor.setControl(manualRequest.withOutput(safeSpeed));
     }
 
