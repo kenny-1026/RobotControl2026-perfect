@@ -221,7 +221,7 @@ public final class Constants {
     public static final int kTransportMotorID = 30;
 
     // ── 速度目標 (RPS) ──
-    public static final double kTransportRps = -70.0; // 輸送帶正常速度
+    public static final double kTransportRps = -50.0; // 輸送帶正常速度
     public static final double kUpToShootRps = -65.0; // 上膛推球速度
     public static final double kSlowTransportRps = 20.0; // 慢速輸送帶 (Intake 時)
 

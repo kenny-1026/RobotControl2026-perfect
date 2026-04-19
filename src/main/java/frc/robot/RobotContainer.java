@@ -11,6 +11,7 @@ import frc.robot.commands.ManualDrive;
 import frc.robot.commands.AutoAimAndShoot;
 import frc.robot.subsystems.IntakeArmSubsystem;
 import frc.robot.subsystems.IntakeRollerSubsystem;
+import frc.robot.subsystems.LightPollution;
 import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.TransportSubsystem;
 import frc.robot.subsystems.StorageSubsystem;
@@ -73,6 +74,7 @@ public class RobotContainer {
         private final TransportSubsystem transport = new TransportSubsystem();
         private final IntakeArmSubsystem intakeArm = new IntakeArmSubsystem();
         private final StorageSubsystem storage = new StorageSubsystem();
+        private final LightPollution lightPollution = new LightPollution(9, 105);// 0: PWM號碼, 60: LED count
         private Command autoCommand;
 
         // ── 距離自適應輔助方法 ──
@@ -148,6 +150,8 @@ public class RobotContainer {
                 shuffleboardManager.setupMainTab(swerve.getField2d(), autoChooser);
                 
                 swerve.setDefaultCommand(manualDriveCommand);
+                // lightPollution.setDefaultCommand();
+                lightPollution.setModeRollingRainbow();
                 driverController.button(8).onTrue(Commands.runOnce(swerve::resetIMU)); // menu button
 
                 driverController.rightStick().onTrue(Commands.either(

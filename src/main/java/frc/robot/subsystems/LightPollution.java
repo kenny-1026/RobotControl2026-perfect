@@ -41,10 +41,15 @@ public class LightPollution extends SubsystemBase {
         ledPattern = LEDPattern.rainbow(255, 255);
     }
     
+    // public void setModeRollingRainbow() {
+    //     patternType = PatternType.SCROLLING_RAINBOW;
+    //     var rainbow = LEDPattern.rainbow(255, 255);
+    //     ledPattern = rainbow.scrollAtRelativeSpeed(Frequency.ofBaseUnits(0.5, Units.Hertz));;
+    // }
     public void setModeRollingRainbow() {
         patternType = PatternType.SCROLLING_RAINBOW;
         var rainbow = LEDPattern.rainbow(255, 255);
-        ledPattern = rainbow.scrollAtRelativeSpeed(Frequency.ofBaseUnits(0.5, Units.Hertz));;
+        ledPattern = rainbow.scrollAtRelativeSpeed(Units.Hertz.of(0.5));
     }
 
     public void setModeSolid(Color color) {
@@ -72,4 +77,5 @@ public class LightPollution extends SubsystemBase {
             ledUpdateCounter = 0;
         }
     }
+    
 }
