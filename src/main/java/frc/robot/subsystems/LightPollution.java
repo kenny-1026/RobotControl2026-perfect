@@ -59,7 +59,7 @@ public class LightPollution extends SubsystemBase {
 
     public void setModeSolidBlink(Color color) {
         patternType = PatternType.SOLID_BLINK;
-        ledPattern =  LEDPattern.solid(getSwappedColor(color)).blink(Seconds.of(0.25));
+        ledPattern =  LEDPattern.solid(getSwappedColor(color)).blink(Seconds.of(0.1));
     }
 
     private Color getSwappedColor(Color color) {

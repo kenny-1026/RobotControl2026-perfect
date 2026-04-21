@@ -27,6 +27,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -74,7 +75,7 @@ public class RobotContainer {
         private final TransportSubsystem transport = new TransportSubsystem();
         private final IntakeArmSubsystem intakeArm = new IntakeArmSubsystem();
         private final StorageSubsystem storage = new StorageSubsystem();
-        private final LightPollution lightPollution = new LightPollution(9, 105);// 0: PWM號碼, 60: LED count
+        private final LightPollution lightPollution = new LightPollution(9, 126);// 0: PWM號碼, 60: LED count
         private Command autoCommand;
 
         // ── 距離自適應輔助方法 ──
@@ -148,7 +149,7 @@ public class RobotContainer {
                 configureBindings();
                 autoChooser = AutoBuilder.buildAutoChooser();
                 shuffleboardManager.setupMainTab(swerve.getField2d(), autoChooser);
-                
+
                 swerve.setDefaultCommand(manualDriveCommand);
                 // lightPollution.setDefaultCommand();
                 lightPollution.setModeRollingRainbow();
@@ -214,9 +215,13 @@ public class RobotContainer {
                 // );
 
                 // Gate：按住Y鍵控制閘門開關
-                driverController.a().whileTrue(storage.sys_reverseStorage());
+                // driverController.a().whileTrue(storage.sys_reverseStorage());
                 // driverController.y().whileTrue(storage.sys_runStorage());
-                driverController.y().onTrue(storage.sys_togglePosition());
+
+                // -------------- 原有按鍵 --------------
+
+                // driverController.y().onTrue(storage.sys_togglePosition());
+
                 driverController.rightTrigger(0.1).whileTrue(
                                 Commands.sequence(
                                                 // 動作一：給 -0.3 的速度，維持 2.5 秒
@@ -229,6 +234,74 @@ public class RobotContainer {
                                                 .repeatedly() // 只要按住右板機，就會不斷重複上述兩個動作
                                                 .finallyDo(() -> intakeArm.setManualSpeed(0)) // 鬆開板機時，安全停止手臂
                 );
+
+                // // 按下 B 鍵，Intake 吸球並啟動輸送帶
+                // driverController.b().whileTrue(
+                // Commands.parallel(
+                // intakeRoller.sys_outtake(),
+                // transport.sys_reverseTransport()));
+
+                // // transport往閘門送球
+                // driverController.x().whileTrue(
+                // transport.sys_runTransport());
+                // intakeArm.setDefaultCommand(
+                // intakeArm.sys_manualMove(() -> -driverController.getRightY()));
+
+                // // 當左板機按壓超過 0.1 時，啟動 intake+transport 指令
+                // // 放開後自動停止
+                // driverController.leftTrigger(0.1).whileTrue(
+                // Commands.parallel(
+                // intakeRoller.sys_intakeWithTrigger(),
+                // transport.sys_runTransport()));
+
+                // -------------- 原有按鍵 --------------
+
+                // -------------- 有加燈光特效的按鍵 --------------
+
+                driverController.y()
+                                .onTrue(Commands.parallel(
+                                                storage.sys_togglePosition(), // 同時切換閘門
+                                                Commands.runOnce(
+                                                                () -> lightPollution.setModeSolidBlink(Color.kYellow),
+                                                                lightPollution)))
+                                .onFalse(Commands.runOnce(() -> lightPollution.setModeRollingRainbow(),
+                                                lightPollution));
+
+                driverController.x()
+                                // 1. 保留原本功能：按住時 Transport 馬達持續轉動
+                                .whileTrue(transport.sys_runTransport())
+                                // 2. 新增燈光功能：按下的瞬間切換到紅色閃爍
+                                .onTrue(Commands.runOnce(() -> lightPollution.setModeSolidBlink(Color.kFirstRed),
+                                                lightPollution))
+                                // 3. 恢復燈光功能：放開的瞬間切換回滾動彩虹
+                                .onFalse(Commands.runOnce(() -> lightPollution.setModeRollingRainbow(),
+                                                lightPollution));
+
+                driverController.b()
+                                // 1. 保留原本功能：按住時同時反轉吸球馬達與傳輸馬達
+                                .whileTrue(Commands.parallel(
+                                                intakeRoller.sys_outtake(),
+                                                transport.sys_reverseTransport()))
+                                // 2. 新增燈光功能：按下的瞬間切換到藍色閃爍
+                                .onTrue(Commands.runOnce(() -> lightPollution.setModeSolidBlink(Color.kFirstBlue),
+                                                lightPollution))
+                                // 3. 恢復燈光功能：放開的瞬間切換回滾動彩虹
+                                .onFalse(Commands.runOnce(() -> lightPollution.setModeRollingRainbow(),
+                                                lightPollution));
+
+                driverController.leftTrigger(0.1)
+                                // 1. 保留原本功能：按住時啟動吸球與傳輸
+                                .whileTrue(Commands.parallel(
+                                                intakeRoller.sys_intakeWithTrigger(),
+                                                transport.sys_runTransport()))
+                                // 2. 新增燈光：按下的瞬間變成橘色閃爍
+                                .onTrue(Commands.runOnce(() -> lightPollution.setModeSolidBlink(Color.kOrange),
+                                                lightPollution))
+                                // 3. 恢復燈光：放開的瞬間回到滾動彩虹
+                                .onFalse(Commands.runOnce(() -> lightPollution.setModeRollingRainbow(),
+                                                lightPollution));
+
+                // -------------- 有加燈光特效的按鍵 --------------
 
                 // driverController.rightTrigger(0.1).whileTrue(
                 // new AutoAimAndShoot(
@@ -272,30 +345,12 @@ public class RobotContainer {
                 // intakeArm.runOnce(() -> intakeArm.setTargetPosition(0.25))
                 // );
 
-                // // 按下 B 鍵，Intake 自動收回到 0 圈 (原點)
-                driverController.b().whileTrue(
-                                Commands.parallel(
-                                                intakeRoller.sys_outtake(),
-                                                transport.sys_reverseTransport()));
-
                 // ==========================================
                 // 設定：按住 "左板機 (Left Trigger)" 來控制 Intake 吸入
                 // ==========================================
 
-                // 當左板機按壓超過 0.1 時，啟動 sys_intakeWithTrigger 指令
-                // 放開後自動停止
-                driverController.leftTrigger(0.1).whileTrue(
-                                Commands.parallel(
-                                                intakeRoller.sys_intakeWithTrigger(),
-                                                transport.sys_runTransport()));
-
-                // transport
-                driverController.x().whileTrue(
-                                transport.sys_runTransport());
-                intakeArm.setDefaultCommand(
-                                intakeArm.sys_manualMove(() -> -driverController.getRightY()));
-
                 // transport.setDefaultCommand(transport.sys_reverseroller());
+
         }
 
         public Command getAutonomousCommand() {
