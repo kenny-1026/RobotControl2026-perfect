@@ -222,18 +222,18 @@ public class RobotContainer {
 
                 // driverController.y().onTrue(storage.sys_togglePosition());
 
-                driverController.rightTrigger(0.1).whileTrue(
-                                Commands.sequence(
-                                                // 動作一：給 -0.3 的速度，維持 2.5 秒
-                                                intakeArm.run(() -> intakeArm.setManualSpeed(-0.3))
-                                                                .withTimeout(2.5),
+                // driverController.rightTrigger(0.1).whileTrue(
+                //                 Commands.sequence(
+                //                                 // 動作一：給 -0.3 的速度，維持 2.5 秒
+                //                                 intakeArm.run(() -> intakeArm.setManualSpeed(-0.3))
+                //                                                 .withTimeout(2.5),
 
-                                                // 動作二：給 0.1 的速度，維持 1.5 秒
-                                                intakeArm.run(() -> intakeArm.setManualSpeed(0.1))
-                                                                .withTimeout(1.5))
-                                                .repeatedly() // 只要按住右板機，就會不斷重複上述兩個動作
-                                                .finallyDo(() -> intakeArm.setManualSpeed(0)) // 鬆開板機時，安全停止手臂
-                );
+                //                                 // 動作二：給 0.1 的速度，維持 1.5 秒
+                //                                 intakeArm.run(() -> intakeArm.setManualSpeed(0.1))
+                //                                                 .withTimeout(1.5))
+                //                                 .repeatedly() // 只要按住右板機，就會不斷重複上述兩個動作
+                //                                 .finallyDo(() -> intakeArm.setManualSpeed(0)) // 鬆開板機時，安全停止手臂
+                // );
 
                 // // 按下 B 鍵，Intake 吸球並啟動輸送帶
                 // driverController.b().whileTrue(
@@ -244,9 +244,7 @@ public class RobotContainer {
                 // // transport往閘門送球
                 // driverController.x().whileTrue(
                 // transport.sys_runTransport());
-                // intakeArm.setDefaultCommand(
-                // intakeArm.sys_manualMove(() -> -driverController.getRightY()));
-
+               
                 // // 當左板機按壓超過 0.1 時，啟動 intake+transport 指令
                 // // 放開後自動停止
                 // driverController.leftTrigger(0.1).whileTrue(
@@ -300,6 +298,23 @@ public class RobotContainer {
                                 // 3. 恢復燈光：放開的瞬間回到滾動彩虹
                                 .onFalse(Commands.runOnce(() -> lightPollution.setModeRollingRainbow(),
                                                 lightPollution));
+
+                 driverController.rightTrigger(0.1).whileTrue(
+                                Commands.sequence(
+                                                // 動作一：給 -0.3 的速度，維持 2.5 秒
+                                                intakeArm.run(() -> intakeArm.setManualSpeed(-0.3))
+                                                                .withTimeout(2.5),
+
+                                                // 動作二：給 0.1 的速度，維持 1.5 秒
+                                                intakeArm.run(() -> intakeArm.setManualSpeed(0.1))
+                                                                .withTimeout(1.5))
+                                                .repeatedly() // 只要按住右板機，就會不斷重複上述兩個動作
+                                                .finallyDo(() -> intakeArm.setManualSpeed(0)) // 鬆開板機時，安全停止手臂
+                );
+
+                 // 使用 "右搖桿 Y 軸" 來控制 Intake 上下                                
+                intakeArm.setDefaultCommand(
+                intakeArm.sys_manualMove(() -> -driverController.getRightY()));                                
 
                 // -------------- 有加燈光特效的按鍵 --------------
 

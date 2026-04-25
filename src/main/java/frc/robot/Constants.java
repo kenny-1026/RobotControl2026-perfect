@@ -200,7 +200,7 @@ public final class Constants {
     public static final double kStorageSpeedRps = 50.0; 
     
     // 圈數限制
-    public static final double kMaxTurns = 45.0;// 45圈是安全的上限，根據實際機構調整 
+    public static final double kMaxTurns = 70.0;// 70圈是安全的上限，根據實際機構調整 
     public static final double kMinTurns = 0.0;// 0 圈是安全的下限，根據實際機構調整
 
     // PID 參數
