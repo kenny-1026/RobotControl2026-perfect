@@ -58,7 +58,7 @@ public class ManualDrive extends Command {
             SmartDashboard.putNumber("Raw/LeftX", mJoystick.getLeftX());
         }
         
-        double boostTranslation = mJoystick.rightBumper().getAsBoolean()?1:0.6;
+        double boostTranslation = mJoystick.rightBumper().getAsBoolean()?1:0.8;
         // double boostTranslation = 1;
         
         xCtl = calculateNullZone(xCtl, ManualDriveConstants.kXDeadzone);

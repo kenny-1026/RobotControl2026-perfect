@@ -21,6 +21,10 @@ public class StorageSubsystem extends SubsystemBase {
     // ✨ 新增：位置控制 (轉到特定點)
     private final PositionVoltage positionRequest = new PositionVoltage(0);
 
+    public boolean isAtMax() {
+        return isAtMax;
+    }
+
     // ✨ 新增這行：用來記住目前是不是在 Max 的位置 (預設為 false，代表一開始在 0)
     private boolean isAtMax = false;
 

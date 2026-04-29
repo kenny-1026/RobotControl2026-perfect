@@ -32,6 +32,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 // import com.pathplanner.lib.PathPlanner;
 // import com.pathplanner.lib.PathPlannerTrajectory;
@@ -75,7 +76,7 @@ public class RobotContainer {
         private final TransportSubsystem transport = new TransportSubsystem();
         private final IntakeArmSubsystem intakeArm = new IntakeArmSubsystem();
         private final StorageSubsystem storage = new StorageSubsystem();
-        private final LightPollution lightPollution = new LightPollution(9, 126);// 0: PWM號碼, 60: LED count
+        private final LightPollution lightPollution = new LightPollution(9, 99);// 0: PWM號碼, 60: LED count
         private Command autoCommand;
 
         // ── 距離自適應輔助方法 ──
@@ -220,86 +221,9 @@ public class RobotContainer {
 
                 // -------------- 原有按鍵 --------------
 
-                // driverController.y().onTrue(storage.sys_togglePosition());
+                driverController.y().onTrue(storage.sys_togglePosition());
 
-                // driverController.rightTrigger(0.1).whileTrue(
-                //                 Commands.sequence(
-                //                                 // 動作一：給 -0.3 的速度，維持 2.5 秒
-                //                                 intakeArm.run(() -> intakeArm.setManualSpeed(-0.3))
-                //                                                 .withTimeout(2.5),
-
-                //                                 // 動作二：給 0.1 的速度，維持 1.5 秒
-                //                                 intakeArm.run(() -> intakeArm.setManualSpeed(0.1))
-                //                                                 .withTimeout(1.5))
-                //                                 .repeatedly() // 只要按住右板機，就會不斷重複上述兩個動作
-                //                                 .finallyDo(() -> intakeArm.setManualSpeed(0)) // 鬆開板機時，安全停止手臂
-                // );
-
-                // // 按下 B 鍵，Intake 吸球並啟動輸送帶
-                // driverController.b().whileTrue(
-                // Commands.parallel(
-                // intakeRoller.sys_outtake(),
-                // transport.sys_reverseTransport()));
-
-                // // transport往閘門送球
-                // driverController.x().whileTrue(
-                // transport.sys_runTransport());
-               
-                // // 當左板機按壓超過 0.1 時，啟動 intake+transport 指令
-                // // 放開後自動停止
-                // driverController.leftTrigger(0.1).whileTrue(
-                // Commands.parallel(
-                // intakeRoller.sys_intakeWithTrigger(),
-                // transport.sys_runTransport()));
-
-                // -------------- 原有按鍵 --------------
-
-                // -------------- 有加燈光特效的按鍵 --------------
-
-                driverController.y()
-                                .onTrue(Commands.parallel(
-                                                storage.sys_togglePosition(), // 同時切換閘門
-                                                Commands.runOnce(
-                                                                () -> lightPollution.setModeSolidBlink(Color.kYellow),
-                                                                lightPollution)))
-                                .onFalse(Commands.runOnce(() -> lightPollution.setModeRollingRainbow(),
-                                                lightPollution));
-
-                driverController.x()
-                                // 1. 保留原本功能：按住時 Transport 馬達持續轉動
-                                .whileTrue(transport.sys_runTransport())
-                                // 2. 新增燈光功能：按下的瞬間切換到紅色閃爍
-                                .onTrue(Commands.runOnce(() -> lightPollution.setModeSolidBlink(Color.kFirstRed),
-                                                lightPollution))
-                                // 3. 恢復燈光功能：放開的瞬間切換回滾動彩虹
-                                .onFalse(Commands.runOnce(() -> lightPollution.setModeRollingRainbow(),
-                                                lightPollution));
-
-                driverController.b()
-                                // 1. 保留原本功能：按住時同時反轉吸球馬達與傳輸馬達
-                                .whileTrue(Commands.parallel(
-                                                intakeRoller.sys_outtake(),
-                                                transport.sys_reverseTransport()))
-                                // 2. 新增燈光功能：按下的瞬間切換到藍色閃爍
-                                .onTrue(Commands.runOnce(() -> lightPollution.setModeSolidBlink(Color.kFirstBlue),
-                                                lightPollution))
-                                // 3. 恢復燈光功能：放開的瞬間切換回滾動彩虹
-                                .onFalse(Commands.runOnce(() -> lightPollution.setModeRollingRainbow(),
-                                                lightPollution));
-
-                driverController.leftTrigger(0.1)
-                                // 1. 保留原本功能：按住時啟動吸球與傳輸
-                                .whileTrue(Commands.parallel(
-                                                intakeRoller.sys_intakeWithTrigger(),
-                                                transport.sys_runTransport()))
-                                // 2. 新增燈光：按下的瞬間變成橘色閃爍
-                                .onTrue(Commands.runOnce(() -> lightPollution.setModeSolidBlink(Color.kOrange),
-                                                lightPollution))
-                                // 3. 恢復燈光：放開的瞬間回到滾動彩虹
-                                .onFalse(Commands.runOnce(() -> lightPollution.setModeRollingRainbow(),
-                                                lightPollution));
-
-                 driverController.rightTrigger(0.1).whileTrue(
+                driverController.rightTrigger(0.1).whileTrue(
                                 Commands.sequence(
                                                 // 動作一：給 -0.3 的速度，維持 2.5 秒
                                                 intakeArm.run(() -> intakeArm.setManualSpeed(-0.3))
@@ -312,9 +236,89 @@ public class RobotContainer {
                                                 .finallyDo(() -> intakeArm.setManualSpeed(0)) // 鬆開板機時，安全停止手臂
                 );
 
-                 // 使用 "右搖桿 Y 軸" 來控制 Intake 上下                                
+                // 按下 B 鍵，Intake 吸球並啟動輸送帶
+                driverController.b().whileTrue(
+                                Commands.parallel(
+                                                intakeRoller.sys_outtake(),
+                                                transport.sys_reverseTransport()));
+
+                // transport往閘門送球
+                driverController.x().whileTrue(
+                                transport.sys_runTransport());
+
+                // 當左板機按壓超過 0.1 時，啟動 intake+transport 指令
+                // 放開後自動停止
+                driverController.leftTrigger(0.1).whileTrue(
+                                Commands.parallel(
+                                                intakeRoller.sys_intakeWithTrigger(),
+                                                transport.sys_runTransport()));
+
+                // -------------- 原有按鍵 --------------
+
+                // -------------- 有加燈光特效的按鍵 --------------
+
+                // driverController.y().onTrue(storage.sys_togglePosition());
+
+                // driverController.x()
+                // // 1. 保留原本功能：按住時 Transport 馬達持續轉動
+                // .whileTrue(transport.sys_runTransport())
+                // // 2. 新增燈光功能：按下的瞬間切換到紅色閃爍
+                // .onTrue(Commands.runOnce(() ->
+                // lightPollution.setModeSolidBlink(Color.kFirstRed),
+                // lightPollution))
+                // // 3. 恢復燈光功能：放開的瞬間切換回滾動彩虹
+                // .onFalse(Commands.runOnce(() -> lightPollution.setModeRollingRainbow(),
+                // lightPollution));
+
+                // driverController.b()
+                // // 1. 保留原本功能：按住時同時反轉吸球馬達與傳輸馬達
+                // .whileTrue(Commands.parallel(
+                // intakeRoller.sys_outtake(),
+                // transport.sys_reverseTransport()))
+                // // 2. 新增燈光功能：按下的瞬間切換到藍色閃爍
+                // .onTrue(Commands.runOnce(() ->
+                // lightPollution.setModeSolidBlink(Color.kFirstBlue),
+                // lightPollution))
+                // // 3. 恢復燈光功能：放開的瞬間切換回滾動彩虹
+                // .onFalse(Commands.runOnce(() -> lightPollution.setModeRollingRainbow(),
+                // lightPollution));
+
+                // driverController.leftTrigger(0.1)
+                // // 1. 保留原本功能：按住時啟動吸球與傳輸
+                // .whileTrue(Commands.parallel(
+                // intakeRoller.sys_intakeWithTrigger(),
+                // transport.sys_runTransport()))
+                // // 2. 新增燈光：按下的瞬間變成橘色閃爍
+                // .onTrue(Commands.runOnce(() ->
+                // lightPollution.setModeSolidBlink(Color.kOrange),
+                // lightPollution))
+                // // 3. 恢復燈光：放開的瞬間回到滾動彩虹
+                // .onFalse(Commands.runOnce(() -> lightPollution.setModeRollingRainbow(),
+                // lightPollution));
+
+                // driverController.rightTrigger(0.1).whileTrue(
+                // Commands.sequence(
+                // // 動作一：給 -0.3 的速度，維持 2.5 秒
+                // intakeArm.run(() -> intakeArm.setManualSpeed(-0.3))
+                // .withTimeout(2.5),
+
+                // // 動作二：給 0.1 的速度，維持 1.5 秒
+                // intakeArm.run(() -> intakeArm.setManualSpeed(0.1))
+                // .withTimeout(1.5))
+                // .repeatedly() // 只要按住右板機，就會不斷重複上述兩個動作
+                // .finallyDo(() -> intakeArm.setManualSpeed(0)) // 鬆開板機時，安全停止手臂
+                // );
+
+                // 使用 "右搖桿 Y 軸" 來控制 Intake 上下
                 intakeArm.setDefaultCommand(
-                intakeArm.sys_manualMove(() -> -driverController.getRightY()));                                
+                                intakeArm.sys_manualMove(() -> -driverController.getRightY()));
+
+                // 根據閘門的位置切換燈光：如果在 Max 就閃白燈，否則滾動彩虹
+                new Trigger(storage::isAtMax)
+                                .onTrue(Commands.runOnce(() -> lightPollution.setModeSolidBlink(Color.kWhite),
+                                                lightPollution))
+                                .onFalse(Commands.runOnce(() -> lightPollution.setModeRollingRainbow(),
+                                                lightPollution));
 
                 // -------------- 有加燈光特效的按鍵 --------------
 
