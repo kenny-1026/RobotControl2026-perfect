@@ -1,0 +1,56 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "New_mid_01"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "New_mid_02"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoDropAndIntake"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "New_mid_03"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Auto Intake"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "New_mid_04"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "New Folder",
+  "choreoAuto": false
+}

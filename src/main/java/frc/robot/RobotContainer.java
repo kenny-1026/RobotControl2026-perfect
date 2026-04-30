@@ -151,7 +151,7 @@ public class RobotContainer {
                 autoChooser = AutoBuilder.buildAutoChooser();
                 shuffleboardManager.setupMainTab(swerve.getField2d(), autoChooser);
 
-                swerve.setDefaultCommand(manualDriveCommand);
+                swerve.setDefaultCommand(manualDriveCommand); 
                 // lightPollution.setDefaultCommand();
                 lightPollution.setModeRollingRainbow();
                 driverController.button(8).onTrue(Commands.runOnce(swerve::resetIMU)); // menu button
