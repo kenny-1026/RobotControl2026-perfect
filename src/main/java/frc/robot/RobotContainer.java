@@ -232,26 +232,7 @@ public class RobotContainer {
         }
 
         private void configureBindings() {
-                // 1. 右邊模式 (Right Bumper)
-                // 參數: swerve, limelightName, TargetX(-0.8), TargetY(-0.5 往右), TargetYaw(-15)
-                // driverController.rightBumper().whileTrue(
-                // new Drive2Tag(swerve, Constants.kLimelightName, -1.15, 0.8, 15.0)
-                // );
-
-                // 2. 左邊模式 (Left Bumper)
-                // 參數: swerve, limelightName, TargetX(-0.8), TargetY(0.5 往左), TargetYaw(-15)
-                // driverController.leftBumper().whileTrue(
-                // new Drive2Tag(swerve, Constants.kLimelightName, -1.15, -0.8, -15.0)
-                // );
-
-                // 自動瞄準射擊：按住 rightTrigger 時自動旋轉面向目標 + 依距離調整射手速度 + 達速對準後自動發射
-                // ⚠️ 與 Drive2Tag (A鍵) 互斥：
-                // - Drive2Tag addRequirements(swerve) → 會中斷 ManualDrive
-                // - AutoAimAndShoot 不佔 swerve（透過 setAimSpeed 疊加）
-                // - 若同時按 A + LB，兩者會同時控制底盤打架
-                // → 解法：Drive2Tag 綁定時額外 require shooter+transport，讓 scheduler 自動互斥
-
-                // 手動射擊：按住左緩衝鍵 (Left Bumper) 時直接設定射手速度為 45 RPS，達速後啟動 Transport 送球；放開時強制停止射手
+                
                 driverController.leftBumper().whileTrue(
                                 Commands.parallel(
                                                 // 1. 讓 Shooter 馬達直接設定為 45 RPS (使用你寫好的 setTargetVelocity 方法)
@@ -271,18 +252,7 @@ public class RobotContainer {
                                                         // (註：transport.sys_runTransport() 放開時會自己停，所以這裡不用多寫)
                                                 }));
 
-                // Drive2Tag：按住 A 鍵自動對位 AprilTag
-                // 額外 require shooter + transport → 若 AutoAimAndShoot 正在運行會被自動取消
-                driverController.a().whileTrue(
-                                transport.sys_reverseTransport());
-
-                // AutoAimAndShoot：按住右板機自動瞄準 + 依距離調整射手速度 + 達速對準後自動發射
-
-                // driverController.rightTrigger(0.1).whileTrue(
-                // new AutoAimAndShoot(swerve, shooterSubsystem, transport, manualDriveCommand,
-                // shuffleboardManager.getAutoAimTab()
-                // )
-                // );
+               
 
                 driverController.rightTrigger(0.1).whileTrue(
                                 new AutoAimAndShoot(
@@ -306,47 +276,6 @@ public class RobotContainer {
                                                 )
                                                 .finallyDo(() -> intakeArm.setManualSpeed(0)));
 
-                // shooterSubsystem.sys_manualShoot(1.0);
-
-                // ==========================================
-                // 1. 手動測試模式 (Manual Mode)
-                // ==========================================
-                // 設定：使用 "左搖桿 Y 軸" 來控制 Intake 上下
-                // 當你在測試的時候，一直推搖桿，看 Dashboard 的數值
-                // intakeArm.setDefaultCommand(
-                // intakeArm.sys_manualMove(() -> -operatorController.getLeftY()) // 注意 Y
-                // 軸通常要加負號才會符合直覺 (上推=正)
-                // );
-                // ==========================================
-                // 2. 自動按鈕 (Automation)
-                // ==========================================
-                // 假設你測試出來，Intake 放下的最佳位置是 0.25 圈 (90度)
-                // 按下 A 鍵，Intake 自動跑 到 0.25 圈的位置
-                // driverController.a().onTrue(
-                // intakeArm.runOnce(() -> intakeArm.setTargetPosition(0.25))
-                // );
-
-                // // 按下 B 鍵，Intake 自動收回到 0 圈 (原點)
-                driverController.b().whileTrue(
-                                Commands.parallel(
-                                                intakeRoller.sys_outtake(),
-                                                transport.sys_reverseTransport()));
-
-                // ==========================================
-                // 設定：按住 "左板機 (Left Trigger)" 來控制 Intake 吸入
-                // ==========================================
-
-                // 當左板機按壓超過 0.1 時，啟動 sys_intakeWithTrigger 指令
-                // 放開後自動停止
-                driverController.leftTrigger(0.1).whileTrue(
-                                intakeRoller.sys_intakeWithTrigger()
-                // intakeRoller.sys_intakeWithTrigger(() ->
-                // driverController.getLeftTriggerAxis())
-                );
-
-                // transport
-                driverController.x().whileTrue(
-                                transport.sys_runTransport());
                 intakeArm.setDefaultCommand(
                                 intakeArm.sys_manualMove(() -> -driverController.getRightY()));
 
