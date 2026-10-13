@@ -36,7 +36,7 @@ public class TransportSubsystem extends SubsystemBase {
         shootConfig.CurrentLimits.StatorCurrentLimit = TransportConstants.kStatorCurrentLimit;
         shootConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
         shootConfig.CurrentLimits.SupplyCurrentLimit = TransportConstants.kSupplyCurrentLimit;
-        shootConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+        shootConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
         up_to_shoot.getConfigurator().apply(shootConfig);
 
         // ==========================================

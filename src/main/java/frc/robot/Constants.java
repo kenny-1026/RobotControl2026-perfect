@@ -180,12 +180,16 @@ public final class Constants {
 
     // ── PID 初始值 (Slot 0, VelocityVoltage) ──
     // ⚠ 透過 Shuffleboard TunableNumber 可即時調參，這裡是開機預設值
-    public static final double kDefaultKV = 0.115;//0404
+    public static final double kDefaultKV = 0.5;//0404
     public static final double kDefaultKP = 0.45;// 0404
     public static final double kDefaultKI = 0.0;
     public static final double kDefaultKD = 0.0;
     public static final double kDefaultKS = 0.0;
 
+    //一電流限制一
+    public static final double kStatorCurrentLimit = 40.0; 
+    public static final double kSupplyCurrentLimit = 40.0;
+    
     // ── 其他 ──
     public static final double kTriggerDeadband = 0.05;
     public static final double kIdleRps = 52;
@@ -201,7 +205,7 @@ public final class Constants {
 
     // ── 速度目標 (RPS) ──
     public static final double kTransportRps = -30.0; // 輸送帶正常速度
-    public static final double kUpToShootRps = -65.0; // 上膛推球速度
+    public static final double kUpToShootRps = 65.0; // 上膛推球速度
     public static final double kSlowTransportRps = 20.0; // 慢速輸送帶 (Intake 時)
 
     // ── PID 初始值 (Slot 0, VelocityVoltage) ──
@@ -331,10 +335,10 @@ public final class Constants {
     public static final boolean kLeftRearRotorInverted = true;
     public static final boolean kRightRearRotorInverted = true;
 
-    public static final boolean kLeftFrontThrottleInverted = false;
-    public static final boolean kRightFrontThrottleInverted = false;
-    public static final boolean kLeftRearThrottleInverted = false;
-    public static final boolean kRightRearThrottleInverted = false;
+    public static final boolean kLeftFrontThrottleInverted = true;
+    public static final boolean kRightFrontThrottleInverted = true;
+    public static final boolean kLeftRearThrottleInverted = true;
+    public static final boolean kRightRearThrottleInverted = true;
 
     // Distance between centers of right and left wheels on robot
     public static final double kTrackWidth = 0.62865000;
