@@ -180,8 +180,8 @@ public final class Constants {
 
     // ── PID 初始值 (Slot 0, VelocityVoltage) ──
     // ⚠ 透過 Shuffleboard TunableNumber 可即時調參，這裡是開機預設值
-    public static final double kDefaultKV = 0.5;//0404
-    public static final double kDefaultKP = 0.45;// 0404
+    public static final double kDefaultKV = 0.1;//0404
+    public static final double kDefaultKP = 0.3;// 0404
     public static final double kDefaultKI = 0.0;
     public static final double kDefaultKD = 0.0;
     public static final double kDefaultKS = 0.0;
